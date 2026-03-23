@@ -62,15 +62,8 @@ def check_time_format(time):
 def handle_input(drink, time):
     try:
         if drink and check_time_format(time):
-            amount = caffeine_amount[drink]
-            st.session_state.drinks.append(drink)
-            intake_tuple = (time, amount)
-            st.session_state.intake.append(intake_tuple)
-            st.session_state.table_list = []
-            for i in range(len(st.session_state.intake)):
-                temp_dict = {"Time": st.session_state.intake[i][0], "Drink":  st.session_state.drinks[i], "Estimated caffeine, mg": st.session_state.intake[i][1]}
-                st.session_state.table_list.append(temp_dict)
-            print("Drink added.")
+            est_caffeine = caffeine_amount[drink]
+            return time, drink, est_caffeine
         elif not check_time_format(time):
             st.info('Check time format (ex: 12.30)', icon="🕙")
             print("Time format wrong.")
@@ -89,8 +82,21 @@ def handle_input(drink, time):
     except Exception as e:
         print(f"An error occurred: {e}")
 
+def add_data(time, drink, est_caffeine):
+    st.session_state.drinks.append(drink)
+    intake_tuple = (time, est_caffeine)
+    st.session_state.intake.append(intake_tuple)
+    st.session_state.table_list = []
+    for i in range(len(st.session_state.intake)):
+        temp_dict = {"Time": st.session_state.intake[i][0], "Drink":  st.session_state.drinks[i], "Estimated caffeine, mg": st.session_state.intake[i][1]}
+        st.session_state.table_list.append(temp_dict)
+    return
+
 if st.button("Add"):
-    handle_input(drink, time)
+    data = handle_input(drink, time)
+    add_data(data[0], data[1], data[2])
+    print("Drink added.")
+
     
 if st.button("Clear"):
     st.session_state.intake = []
