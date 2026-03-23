@@ -14,9 +14,8 @@ import matplotlib.pyplot as plt
 intake = []
 
 def add_to_list(amount, time):
-    intake_tuple = ()
-    intake_tuple += amount
-    intake += intake_tuple
+    intake_tuple = (int(amount), time)
+    intake.append(intake_tuple)
     return intake
     
 def clear(intake):
