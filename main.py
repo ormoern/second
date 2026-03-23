@@ -74,7 +74,7 @@ def handle_input(drink, time, cust_caff_amnt):
                 st.info('Check time format (ex: 12.30)', icon="🕙")
                 return None
             else:
-                drink and check_time_format(time)::
+                drink and check_time_format(time):
                 est_caffeine = caffeine_amount[drink]
                 return time, drink, est_caffeine
         elif drink not in caffeine_amount:
