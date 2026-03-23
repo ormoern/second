@@ -26,7 +26,7 @@ def add(amount, time):
     intake += intake_tuple
     return intake
     
-def clear(intake)
+def clear(intake):
     intake = []
     return intake
 
