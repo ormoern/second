@@ -116,7 +116,7 @@ if st.button("Add"):
         result = handle_input(custom_drink, time, custom_caff)
 
     if result:
-    add_data(result*)
+        add_data(result*)
 
     
 if st.button("Clear"):
