@@ -11,6 +11,8 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
+intake_tuple = ()
+
 def add_to_list(amount, time):
     intake_tuple += amount, time
     intake += intake_tuple
