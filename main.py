@@ -54,13 +54,14 @@ def check_time_format(time):
     time_2 = time_list[1]
     if 1 <= len(time_1) <= 2 and 1 <= len(time_2) <= 2:
         if str(time_1) < 24 and str(time2) < 60:
+            st.write("Time format correct.")
             return True
     else:
         return False
 
 if st.button("Add"):
     try:
-        if drink and time and check_time_format(time):
+        if drink and check_time_format(time):
             amount = caffeine_amount[drink]
             st.session_state.drinks.append(drink)
             intake_tuple = (time, amount)
@@ -69,16 +70,22 @@ if st.button("Add"):
             for i in range(len(st.session_state.intake)):
                 temp_dict = {"Time": st.session_state.intake[i][0], "Drink":  st.session_state.drinks[i], "Estimated caffeine, mg": st.session_state.intake[i][1]}
                 st.session_state.table_list.append(temp_dict)
-        elif drink and time is not None:
-            st.info('No time...', icon="🕙")
-        elif drink is not None and time:
-            st.info('No drink...', icon="☕")
-        elif drink is not None and time is not None:
-            st.info('Nothing...', icon="🤔")
+            st.write("Drink added.")
         elif not check_time_format(time):
             st.info('Check time format (ex: 12.30)', icon="🕙")
+            st.write("Time format wrong.")
+        elif drink and time is not None:
+            st.info('No time...', icon="🕙")
+            st.write("No time.")
+        elif drink is not None and time:
+            st.info('No drink...', icon="☕")
+            st.write("No drink.")
+        elif drink is not None and time is not None:
+            st.info('Nothing...', icon="🤔")
+            st.write("Nothing.")
         else:
             st.info('Uhh, what?')
+            st.write('Undefined error.')
     except Exception as e:
         print(f"An error occurred: {e}")
     
