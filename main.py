@@ -30,6 +30,7 @@ if st.button("Add"):
     
 if st.button("Clear"):
     st.session_state.intake = []
+    st.session_state.table_list = []
     
 for i in range(len(st.session_state.intake)):
     temp_dict = {"Time": st.session_state.intake[i][0], "Caffeine": st.session_state.intake[i][1]}
