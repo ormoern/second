@@ -10,6 +10,7 @@ Original file is located at
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+import re
 
 
 if "intake" not in st.session_state:
@@ -20,6 +21,9 @@ if "drinks" not in st.session_state:
     st.session_state.drinks = []
     
 time = st.text_input("Time", placeholder="00.00")
+
+custom_drink = st.text_input("Custom drink", placeholder="Drink")
+custom_caff = st.text_input("Caffeine amount, mg", placeholder="100")
 
 drink = st.selectbox(
     "Drink",
@@ -59,15 +63,11 @@ def check_time_format(time):
     else:
         return False
 
-def handle_input(drink, time):
+def handle_input(drink, time, cust_caff_amnt):
     try:
         if drink and time == "":
             st.info('No time...', icon="🕙")
             return None
-        elif drink and check_time_format(time):
-            est_caffeine = caffeine_amount[drink]
-            print(time, drink, est_caffeine)
-            return time, drink, est_caffeine
         elif not check_time_format(time):
             st.info('Check time format (ex: 12.30)', icon="🕙")
             return None
@@ -77,6 +77,17 @@ def handle_input(drink, time):
         elif drink is None and time is None:
             st.info('Nothing...', icon="🤔")
             return None
+        elif re.findall("^\d*$", cust_caff_amnt) is None:
+            st.info("Only numbers are allowed.")
+        elif if 0 < int(cust_caff_amnt) <= 1000:
+            st.info("Invalid number.")
+        elif drink and check_time_format(time):
+            if cust_caff_amnt:
+                est_caffeine = int(cust_caff_amnt)
+                return time, drink, est_caffeine
+            else:
+                est_caffeine = caffeine_amount[drink]
+                return time, drink, est_caffeine
         else:
             st.info('Uhh, what?')
             return None
@@ -94,7 +105,10 @@ def add_data(time, drink, est_caffeine):
     return
 
 if st.button("Add"):
-    if handle_input(drink, time):
+    if custom_drink != "" and custom_caff != "":
+        time, drink, est_caffeine = handle_input(custom_drink, time, caff_amnt)
+        add_data(time, drink, est_caffeine)
+    else handle_input(drink, time):
         time, drink, est_caffeine = handle_input(drink, time)
         add_data(time, drink, est_caffeine)
 
