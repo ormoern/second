@@ -49,26 +49,27 @@ caffeine_amount = {
 }
 
 def check_time_format(time):
-    time_list = time.split(".")
-    time_1 = time_list[0]
-    time_2 = time_list[1]
-    if 1 <= len(time_1) <= 2 and 1 <= len(time_2) <= 2:
-        if int(time_1) < 24 and int(time_2) < 60:
-            return True
+    if len(time) > 0 and "." in time:
+        time_list = time.split(".")
+        time_1 = time_list[0]
+        time_2 = time_list[1]
+        if 1 <= len(time_1) <= 2 and 1 <= len(time_2) <= 2:
+            if int(time_1) < 24 and int(time_2) < 60:
+                return True
     else:
         return False
 
 def handle_input(drink, time):
     try:
-        if drink and check_time_format(time):
+        if drink and time is None:
+            st.info('No time...', icon="🕙")
+            return None
+        elif drink and check_time_format(time):
             est_caffeine = caffeine_amount[drink]
             print(time, drink, est_caffeine)
             return time, drink, est_caffeine
         elif not check_time_format(time):
             st.info('Check time format (ex: 12.30)', icon="🕙")
-            return None
-        elif drink and time is None:
-            st.info('No time...', icon="🕙")
             return None
         elif drink is None and time:
             st.info('No drink...', icon="☕")
