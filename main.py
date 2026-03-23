@@ -21,7 +21,7 @@ time = st.text_input("Time", placeholder="00.00")
 
 drink = st.selectbox(
     "Drink",
-    ("Espresso", "Double espresso", "Filter coffee", "Latte", "Cappuccino", "Flat white", "Black tea (300ml)", "Green tea (300ml)", "Energy drink (250ml)", "Energy drink (500ml)"
+    ("Espresso", "Double espresso", "Filter coffee", "Latte", "Cappuccino", "Flat white", "Black tea (300ml)", "Green tea (300ml)", "Energy drink (250ml)", "Energy drink (500ml)")
 )
 caffeine_amount = {
     "Espresso": 65,
