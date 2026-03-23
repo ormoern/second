@@ -16,6 +16,8 @@ if "intake" not in st.session_state:
     st.session_state.intake = []
 if "table_list" not in st.session_state:
     st.session_state.table_list = []
+if "drinks" not in st.session_state:
+    st.session_state.drinks = []
     
 time = st.text_input("Time", placeholder="00.00")
 
@@ -40,11 +42,12 @@ if st.button("Add"):
     try:
         if drink and time:
             amount = caffeine_amount[drink]
+            st.session_state.drinks.append(drink)
             intake_tuple = (time, amount)
             st.session_state.intake.append(intake_tuple)
             st.session_state.table_list = []
             for i in range(len(st.session_state.intake)):
-                temp_dict = {"Time": st.session_state.intake[i][0], "Drink": drink, "Caffeine": st.session_state.intake[i][1]}
+                temp_dict = {"Time": st.session_state.intake[i][0], "Drink":  st.session_state.drinks[i], "Caffeine": st.session_state.intake[i][1]}
                 st.session_state.table_list.append(temp_dict)
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -52,6 +55,7 @@ if st.button("Add"):
 if st.button("Clear"):
     st.session_state.intake = []
     st.session_state.table_list = []
+     st.session_state.drinks = []
                  
 st.table(data=st.session_state.table_list)
 
