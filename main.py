@@ -61,7 +61,7 @@ def check_time_format(time):
 
 def handle_input(drink, time):
     try:
-        if drink and time is None:
+        if drink and time "":
             st.info('No time...', icon="🕙")
             return None
         elif drink and check_time_format(time):
