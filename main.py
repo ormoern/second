@@ -53,6 +53,7 @@ caffeine_amount = {
 }
 
 def check_time_format(time):
+    print("start time check")
     if len(time) > 0 and "." in time:
         time_list = time.split(".")
         time_1 = time_list[0]
@@ -64,6 +65,7 @@ def check_time_format(time):
         return False
 
 def handle_input(drink, time, cust_caff_amnt):
+    print("start check")
     try:
         if drink and time == "":
             st.info('No time...', icon="🕙")
