@@ -89,7 +89,7 @@ def handle_input(drink, time, cust_caff_amnt):
         elif int(cust_caff_amnt) <= 1 or int(cust_caff_amnt) >= 1000:
             st.info("Invalid number.")
             return None
-            
+
         elif:
             est_caffeine = int(cust_caff_amnt)
             return time, drink, est_caffeine
@@ -111,11 +111,12 @@ def add_data(time, drink, est_caffeine):
 
 if st.button("Add"):
     if custom_drink == "" and custom_caff == "":
-        time, drink, est_caffeine = handle_input(drink, time, None)
-        add_data(time, drink, est_caffeine)
+        result = handle_input(drink, time, None)
     else: 
-        time, drink, est_caffeine = handle_input(custom_drink, time, custom_caff)
-        add_data(time, drink, est_caffeine)
+        result = handle_input(custom_drink, time, custom_caff)
+
+    if result:
+    add_data(result*)
 
     
 if st.button("Clear"):
