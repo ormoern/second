@@ -130,7 +130,7 @@ def time_to_int(time):
     time_list = time.split(".")
     time_1 = int(time_list[0])
     time_2 = int(time_list[1])
-    time_int = round(time_1 + (time_2 / 60))
+    time_int = round((time_1 + (time_2 / 60)), 2)
     return time_int
 
 def absorption_half_life(intake, start_time, hours, start_caff):
