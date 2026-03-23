@@ -69,13 +69,13 @@ if st.button("Add"):
             for i in range(len(st.session_state.intake)):
                 temp_dict = {"Time": st.session_state.intake[i][0], "Drink":  st.session_state.drinks[i], "Estimated caffeine, mg": st.session_state.intake[i][1]}
                 st.session_state.table_list.append(temp_dict)
-        elif drink and !time:
+        elif drink and time is not None:
             st.info('No time...', icon="🕙")
-        elif !drink and time:
+        elif drink is not None and time:
             st.info('No drink...', icon="☕")
-        elif !drink and !time:
+        elif drink is not None and time is not None:
             st.info('Nothing...', icon="🤔")
-        elif !check_time_format(time):
+        elif not check_time_format(time):
             st.info('Check time format (ex: 12.30)', icon="🕙")
         else:
             st.info('Uhh, what?')
