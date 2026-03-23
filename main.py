@@ -29,6 +29,7 @@ if st.button("Add"):
         print(f"An error occurred: {e}")
     
 if st.button("Clear"):
+    st.session_state.intake = []
     intake = []
 
 st.write("Input:", intake)
