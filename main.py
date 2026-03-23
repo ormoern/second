@@ -66,6 +66,10 @@ def check_time_format(time):
 def handle_input(drink, time, cust_caff_amnt):
     print("start check")
     try:
+        if not cust_caff_amnt and drink:
+            st.info('No caffeine amount, yet there is a drink...', icon="🤔")
+        if cust_caff_amnt and not drink:
+            st.info('No custom drink, yet there is a caffeine amount...', icon="🤔")
         if drink and time == "":
             st.info('No time...', icon="🕙")
             return None
