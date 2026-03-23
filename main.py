@@ -25,8 +25,6 @@ if st.button("Add"):
             intake_tuple = (time, int(amount))
             st.session_state.intake.append(intake_tuple)
             intake = st.session_state.intake
-            st.write(intake_tuple)
-            st.write(tuple)
     except Exception as e:
         print(f"An error occurred: {e}")
     
@@ -105,6 +103,9 @@ def strings(ticks):
     strings.append(f"{ticks[i % 24]}:00")
   return strings
 
+hrs_amnt = 32
+y_const = 40
+
 if st.button("Show"):
     print(intake)
     x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
@@ -117,7 +118,6 @@ if st.button("Show"):
     plt.tight_layout()
     st.pyplot(plt.gcf())
     
-hrs_amnt = 32
-y_const = 40
+
 
 
