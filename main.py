@@ -11,17 +11,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-amount = st.text_input("Caffeine amount", "100")
-time = st.text_input("Time", "00.00")
-
-st.button("Add", on_click=add(amount, time))
-st.button("Clear", on_click=clear(intake))
-
-intake = []
-
-st.text(intake)
-
-def add(amount, time):
+def add_to_list(amount, time):
     intake_tuple += amount, time
     intake += intake_tuple
     return intake
@@ -29,6 +19,16 @@ def add(amount, time):
 def clear(intake):
     intake = []
     return intake
+
+amount = st.text_input("Caffeine amount", "100")
+time = st.text_input("Time", "00.00")
+
+st.button("Add", on_click=add_to_list(amount, time))
+st.button("Clear", on_click=clear(intake))
+
+intake = []
+
+st.text(intake)
 
 def time_to_int(time):
     time_list = time.split(".")
