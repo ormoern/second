@@ -42,50 +42,49 @@ def time_to_int(time):
     return time_int
 
 def absorption_half_life(intake, start_time, hours, start_caff):
-
-  x = np.linspace(start_time, hours, 60)
-  half_life = 5.70
-
-  intake_len = len(intake)
-
-  curr_caff = start_caff
-
-  decay_start = 0
-
-  y = np.zeros_like(x)
-
-  for i in range(intake_len):
     try:
-        #absorption
-        intake_time = time_to_int(intake[i][0])
-        intake_caff = intake[i][1]
+        x = np.linspace(start_time, hours, 60)
+        half_life = 5.70
+        
+        intake_len = len(intake)
+        
+        curr_caff = start_caff
+        
+        decay_start = 0
+        
+        y = np.zeros_like(x)
+
+        for i in range(intake_len):
     
-        start_x = intake_time
-        start_y = curr_caff
-        curr_caff = curr_caff + intake_caff
-        decay_start = intake_time + 0.75
-        end_x = decay_start
-        end_y = curr_caff
+            #absorption
+            intake_time = time_to_int(intake[i][0])
+            intake_caff = intake[i][1]
+        
+            start_x = intake_time
+            start_y = curr_caff
+            curr_caff = curr_caff + intake_caff
+            decay_start = intake_time + 0.75
+            end_x = decay_start
+            end_y = curr_caff
+        
+            # Calculate absorption only for the absorption phase
+            y_absorption_full = start_y + ((end_y - start_y) / (end_x - start_x)) * (x - start_x)
+            y_absorption = np.where((x >= start_x) & (x <= end_x), y_absorption_full, 0)
+        
+            #decay
+            # Calculate decay starting from decay_start
+            y_decay_full = curr_caff * (0.5)**((x - decay_start)/half_life)
+        
+            if i != (intake_len - 1):
+              x_stop = time_to_int(intake[i+1][0])
+              y_decay = np.where((x > end_x) & (x <= x_stop), y_decay_full, 0)
+              # Update curr_caff for the next absorption phase based on decay at x_stop
+              if np.any(x >= x_stop):
+                  curr_caff = curr_caff * (0.5)**((x_stop - decay_start)/half_life)
+            else:
+                y_decay = np.where(x > end_x, y_decay_full, 0)
     
-        # Calculate absorption only for the absorption phase
-        y_absorption_full = start_y + ((end_y - start_y) / (end_x - start_x)) * (x - start_x)
-        y_absorption = np.where((x >= start_x) & (x <= end_x), y_absorption_full, 0)
-    
-        #decay
-        # Calculate decay starting from decay_start
-        y_decay_full = curr_caff * (0.5)**((x - decay_start)/half_life)
-    
-        if i != (intake_len - 1):
-          x_stop = time_to_int(intake[i+1][0])
-          y_decay = np.where((x > end_x) & (x <= x_stop), y_decay_full, 0)
-          # Update curr_caff for the next absorption phase based on decay at x_stop
-          if np.any(x >= x_stop):
-              curr_caff = curr_caff * (0.5)**((x_stop - decay_start)/half_life)
-    
-        else:
-          y_decay = np.where(x > end_x, y_decay_full, 0)
-    
-        y += y_absorption + y_decay
+            y += y_absorption + y_decay
     except Exception as e:
         print(f"An error occurred: {e}")
     return x, y
