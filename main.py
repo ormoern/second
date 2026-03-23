@@ -13,13 +13,13 @@ import matplotlib.pyplot as plt
 
 intake = []
 
-amount = st.text_input("Caffeine amount")
 time = st.text_input("Time")
+amount = st.text_input("Caffeine amount")
 
 if st.button("Add"):
     try:
         if amount and time:
-            intake_tuple = (int(amount), time)
+            intake_tuple = (time, int(amount))
             intake.append(intake_tuple)
     except exception as e:
         print(f"An error occurred: {e}")
@@ -97,7 +97,11 @@ def strings(ticks):
     strings.append(f"{ticks[i % 24]}:00")
   return strings
 
-x_plot, y_plot = absorption_half_life(intake, 0, 30, 0)
+try:
+    x_plot, y_plot = absorption_half_life(intake, 0, 30, 0)
+except exception as e:
+    print(f"An error occurred: {e}")
+    
 hrs_amnt = 32
 y_const = 40
 x_const = 23
