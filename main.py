@@ -11,10 +11,8 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-intake = []
-
-time = st.text_input("Time")
-amount = st.text_input("Caffeine amount")
+time = st.text_input("Time", placeholder="00.00")
+amount = st.text_input("Caffeine amount", placeholder="100")
 
 if st.button("Add"):
     try:
