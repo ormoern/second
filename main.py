@@ -135,7 +135,7 @@ def time_to_int(time):
 
 def absorption_half_life(intake, start_time, hours, start_caff):
     try:
-        x = np.linspace(start_time, hours, 60)
+        x = np.linspace(start_time, hours, 300)
         half_life = 5.70
         
         intake_len = len(intake)
