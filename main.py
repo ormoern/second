@@ -67,14 +67,13 @@ def handle_input(drink, time, cust_caff_amnt):
     print("start check")
     try:
         if drink in caffeine_amount:
-            if (drink or cust_caff_amnt) and time == "":
+            if time == "":
                 st.info('No time...', icon="🕙")
                 return None
             elif not check_time_format(time):
                 st.info('Check time format (ex: 12.30)', icon="🕙")
                 return None
             else:
-                drink and check_time_format(time)
                 est_caffeine = caffeine_amount[drink]
                 return time, drink, est_caffeine
         elif drink not in caffeine_amount:
@@ -84,14 +83,19 @@ def handle_input(drink, time, cust_caff_amnt):
             if cust_caff_amnt and drink == "":
                 st.info('No custom drink, yet there is a caffeine amount...', icon="🤔")
                 return None
-            elif not re.findall(r"^\dt$", cust_caff_amnt):
+            elif not re.match(r"^\dt$", cust_caff_amnt):
                 st.info("Only numbers are allowed.")
                 return None
             elif int(cust_caff_amnt) <= 1 or int(cust_caff_amnt) >= 1000:
                 st.info("Invalid number.")
                 return None
+            elif time == "":
+                st.info('No time...', icon="🕙")
+                return None
+            elif not check_time_format(time):
+                st.info('Check time format (ex: 12.30)', icon="🕙")
+                return None
             else:
-                drink and check_time_format(time)
                 est_caffeine = int(cust_caff_amnt)
                 return time, drink, est_caffeine
         else:
