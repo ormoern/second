@@ -47,7 +47,7 @@ if st.button("Add"):
             st.session_state.intake.append(intake_tuple)
             st.session_state.table_list = []
             for i in range(len(st.session_state.intake)):
-                temp_dict = {"Time": st.session_state.intake[i][0], "Drink":  st.session_state.drinks[i], "Caffeine": st.session_state.intake[i][1]}
+                temp_dict = {"Time": st.session_state.intake[i][0], "Drink":  st.session_state.drinks[i], "Caffeine, mg": st.session_state.intake[i][1]}
                 st.session_state.table_list.append(temp_dict)
     except Exception as e:
         print(f"An error occurred: {e}")
