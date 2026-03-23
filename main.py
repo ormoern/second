@@ -13,20 +13,19 @@ import matplotlib.pyplot as plt
 
 intake = []
 
-def add_to_list(amount, time):
-    intake_tuple = (int(amount), time)
-    intake.append(intake_tuple)
-    return intake
-    
-def clear(intake):
-    intake = []
-    return intake
-
 amount = st.text_input("Caffeine amount")
 time = st.text_input("Time")
 
-st.button("Add", on_click=add_to_list(amount, time))
-st.button("Clear", on_click=clear(intake))
+if st.button("Add"):
+    try:
+        if amount and time:
+            intake_tuple = (int(amount), time)
+            intake.append(intake_tuple)
+    except:
+        exception as e
+    
+if st.button("Clear"):
+    intake = []
 
 st.text(intake)
 
