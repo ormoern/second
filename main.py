@@ -104,6 +104,7 @@ def strings(ticks):
   return strings
 
 if st.button("Show"):
+    print(intake)
     x_plot, y_plot = absorption_half_life(intake, 0, 30, 0)
     plt.plot(x_plot, y_plot)
     plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
