@@ -60,7 +60,8 @@ def check_time_format(time):
         return False
 
 if st.button("Add"):
-    try:
+    st.write("Drink added.")
+    """try:
         if drink and check_time_format(time):
             amount = caffeine_amount[drink]
             st.session_state.drinks.append(drink)
@@ -87,7 +88,7 @@ if st.button("Add"):
             st.info('Uhh, what?')
             st.write('Undefined error.')
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred: {e}")"""
     
 if st.button("Clear"):
     st.session_state.intake = []
