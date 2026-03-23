@@ -11,7 +11,6 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-intake = []
 
 if "intake" not in st.session_state:
     st.session_state.intake = []
@@ -24,15 +23,13 @@ if st.button("Add"):
         if amount and time:
             intake_tuple = (time, int(amount))
             st.session_state.intake.append(intake_tuple)
-            intake = st.session_state.intake
     except Exception as e:
         print(f"An error occurred: {e}")
     
 if st.button("Clear"):
     st.session_state.intake = []
-    intake = []
 
-st.write("Input:", intake)
+st.table(data=st.session_state.intake)
 
 def time_to_int(time):
     time_list = time.split(".")
@@ -106,7 +103,6 @@ hrs_amnt = 32
 y_const = 40
 
 if st.button("Show"):
-    print(intake)
     x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
     plt.plot(x_plot, y_plot)
     plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
