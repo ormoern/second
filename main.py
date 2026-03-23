@@ -30,7 +30,7 @@ if st.button("Add"):
 if st.button("Clear"):
     intake = []
 
-st.write("Input:" st.session_state.intake)
+st.write("Input:", st.session_state.intake)
 
 def time_to_int(time):
     time_list = time.split(".")
