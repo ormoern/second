@@ -21,8 +21,8 @@ if st.button("Add"):
         if amount and time:
             intake_tuple = (int(amount), time)
             intake.append(intake_tuple)
-    except:
-        exception as e
+    except exception as e:
+        print(f"An error occurred: {e}")
     
 if st.button("Clear"):
     intake = []
