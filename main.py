@@ -55,39 +55,40 @@ def absorption_half_life(intake, start_time, hours, start_caff):
   y = np.zeros_like(x)
 
   for i in range(intake_len):
-
-    #absorption
-    intake_time = time_to_int(intake[i][0])
-    intake_caff = intake[i][1]
-
-    start_x = intake_time
-    start_y = curr_caff
-    curr_caff = curr_caff + intake_caff
-    decay_start = intake_time + 0.75
-    end_x = decay_start
-    end_y = curr_caff
-
-    # Calculate absorption only for the absorption phase
-    y_absorption_full = start_y + ((end_y - start_y) / (end_x - start_x)) * (x - start_x)
-    y_absorption = np.where((x >= start_x) & (x <= end_x), y_absorption_full, 0)
-
-    #decay
-    # Calculate decay starting from decay_start
-    y_decay_full = curr_caff * (0.5)**((x - decay_start)/half_life)
-
-    if i != (intake_len - 1):
-      x_stop = time_to_int(intake[i+1][0])
-      y_decay = np.where((x > end_x) & (x <= x_stop), y_decay_full, 0)
-      # Update curr_caff for the next absorption phase based on decay at x_stop
-      if np.any(x >= x_stop):
-          curr_caff = curr_caff * (0.5)**((x_stop - decay_start)/half_life)
-
-    else:
-      y_decay = np.where(x > end_x, y_decay_full, 0)
-
-    y += y_absorption + y_decay
-
-  return x, y
+    try:
+        #absorption
+        intake_time = time_to_int(intake[i][0])
+        intake_caff = intake[i][1]
+    
+        start_x = intake_time
+        start_y = curr_caff
+        curr_caff = curr_caff + intake_caff
+        decay_start = intake_time + 0.75
+        end_x = decay_start
+        end_y = curr_caff
+    
+        # Calculate absorption only for the absorption phase
+        y_absorption_full = start_y + ((end_y - start_y) / (end_x - start_x)) * (x - start_x)
+        y_absorption = np.where((x >= start_x) & (x <= end_x), y_absorption_full, 0)
+    
+        #decay
+        # Calculate decay starting from decay_start
+        y_decay_full = curr_caff * (0.5)**((x - decay_start)/half_life)
+    
+        if i != (intake_len - 1):
+          x_stop = time_to_int(intake[i+1][0])
+          y_decay = np.where((x > end_x) & (x <= x_stop), y_decay_full, 0)
+          # Update curr_caff for the next absorption phase based on decay at x_stop
+          if np.any(x >= x_stop):
+              curr_caff = curr_caff * (0.5)**((x_stop - decay_start)/half_life)
+    
+        else:
+          y_decay = np.where(x > end_x, y_decay_full, 0)
+    
+        y += y_absorption + y_decay
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    return x, y
 
 def ticks(amount):
   tick = []
@@ -102,19 +103,16 @@ def strings(ticks):
     strings.append(f"{ticks[i % 24]}:00")
   return strings
 
-try:
-    if st.button("Show"):
-        x_plot, y_plot = absorption_half_life(intake, 0, 30, 0)
-        plt.plot(x_plot, y_plot)
-        plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
-        plt.xlabel('time')
-        plt.ylabel('caffeine, mg')
-        plt.axhline(y=y_const, color='r', linestyle='--')
-        plt.legend()
-        plt.tight_layout()
-        st.pyplot(plt.gcf())
-except Exception as e:
-    print(f"An error occurred: {e}")
+if st.button("Show"):
+    x_plot, y_plot = absorption_half_life(intake, 0, 30, 0)
+    plt.plot(x_plot, y_plot)
+    plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
+    plt.xlabel('time')
+    plt.ylabel('caffeine, mg')
+    plt.axhline(y=y_const, color='r', linestyle='--')
+    plt.legend()
+    plt.tight_layout()
+    st.pyplot(plt.gcf())
     
 hrs_amnt = 32
 y_const = 40
