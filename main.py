@@ -73,7 +73,8 @@ def handle_input(drink, time, cust_caff_amnt):
             elif not check_time_format(time):
                 st.info('Check time format (ex: 12.30)', icon="🕙")
                 return None
-            else drink and check_time_format(time)::
+            else:
+                drink and check_time_format(time)::
                 est_caffeine = caffeine_amount[drink]
                 return time, drink, est_caffeine
         elif drink not in caffeine_amount:
@@ -89,7 +90,8 @@ def handle_input(drink, time, cust_caff_amnt):
             elif int(cust_caff_amnt) <= 1 or int(cust_caff_amnt) >= 1000:
                 st.info("Invalid number.")
                 return None
-            else drink and check_time_format(time):
+            else:
+                drink and check_time_format(time):
                 est_caffeine = int(cust_caff_amnt)
                 return time, drink, est_caffeine
         else:
