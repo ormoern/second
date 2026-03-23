@@ -25,8 +25,8 @@ if st.button("Add"):
             intake_tuple = (time, int(amount))
             st.session_state.intake.append(intake_tuple)
             intake = st.session_state.intake
-            print(intake_tuple)
-            print(tuple)
+            st.write(intake_tuple)
+            st.write(tuple)
     except Exception as e:
         print(f"An error occurred: {e}")
     
