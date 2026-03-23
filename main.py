@@ -11,6 +11,10 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
+beverage = st.text_input("Beverage")
+
+time = st.text_input("Time", "00.00")
+
 intake = [
     ("9.00", 30),
     ("11.00", 30),
