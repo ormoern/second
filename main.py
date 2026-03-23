@@ -71,13 +71,10 @@ def handle_input(drink, time, cust_caff_amnt):
         elif not check_time_format(time):
             st.info('Check time format (ex: 12.30)', icon="🕙")
             return None
-        elif drink is None and time:
-            st.info('No drink...', icon="☕")
-            return None
-        elif drink is None and time is None:
+        elif not drink and time == "":
             st.info('Nothing...', icon="🤔")
             return None
-        elif re.findall("^\d*$", cust_caff_amnt) is None:
+        elif not re.findall("^\d*$", cust_caff_amnt):
             st.info("Only numbers are allowed.")
         elif 0 < int(cust_caff_amnt) <= 1000:
             st.info("Invalid number.")
