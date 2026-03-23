@@ -53,7 +53,6 @@ caffeine_amount = {
 }
 
 def check_time_format(time):
-    print("start time check")
     if len(time) > 0 and "." in time:
         time_list = time.split(".")
         time_1 = time_list[0]
@@ -69,24 +68,18 @@ def handle_input(drink, time, cust_caff_amnt):
     try:
         if drink and time == "":
             st.info('No time...', icon="🕙")
-            print("exit time1")
             return None
         elif not check_time_format(time):
             st.info('Check time format (ex: 12.30)', icon="🕙")
-            print("exit time2")
             return None
         elif not drink and time == "":
             st.info('Nothing...', icon="🤔")
-            print("exit nothing")
             return None
-        elif not re.findall("^\d*$", cust_caff_amnt):
-            print("exit regex")
+        """elif not re.findall("^\d*$", cust_caff_amnt):
             st.info("Only numbers are allowed.")
         elif cust_caff_amnt and 0 < int(cust_caff_amnt) <= 1000:
-            print("exit cust caff")
-            st.info("Invalid number.")
+            st.info("Invalid number.")"""
         elif drink and check_time_format(time):
-            print("exit time format drink")
             if cust_caff_amnt:
                 est_caffeine = int(cust_caff_amnt)
                 return time, drink, est_caffeine
