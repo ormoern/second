@@ -55,7 +55,7 @@ if st.button("Add"):
 if st.button("Clear"):
     st.session_state.intake = []
     st.session_state.table_list = []
-     st.session_state.drinks = []
+    st.session_state.drinks = []
                  
 st.table(data=st.session_state.table_list)
 
