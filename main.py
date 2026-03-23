@@ -11,21 +11,26 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
+if "intake" not in st.session_state:
+    st.session_state.intake = []
+
 time = st.text_input("Time", placeholder="00.00")
 amount = st.text_input("Caffeine amount", placeholder="100")
+
+
 
 if st.button("Add"):
     try:
         if amount and time:
             intake_tuple = (time, int(amount))
-            intake.append(intake_tuple)
-    except exception as e:
+            st.session_state.intake.append(intake_tuple)
+    except Exception as e:
         print(f"An error occurred: {e}")
     
 if st.button("Clear"):
     intake = []
 
-st.text(intake)
+st.write("Input:" st.session_state.intake)
 
 def time_to_int(time):
     time_list = time.split(".")
@@ -97,12 +102,11 @@ def strings(ticks):
 
 try:
     x_plot, y_plot = absorption_half_life(intake, 0, 30, 0)
-except exception as e:
+except Exception as e:
     print(f"An error occurred: {e}")
     
 hrs_amnt = 32
 y_const = 40
-x_const = 23
 
 if st.button("Show"):
     plt.plot(x_plot, y_plot)
