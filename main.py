@@ -93,8 +93,8 @@ def add_data(time, drink, est_caffeine):
     return
 
 if st.button("Add"):
-    data = handle_input(drink, time)
-    add_data(data[0], data[1], data[2])
+    time, drink, est_caffeine = handle_input(drink, time)
+    add_data(time, drink, est_caffeine)
     print("Drink added.")
 
     
