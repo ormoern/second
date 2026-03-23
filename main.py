@@ -25,16 +25,16 @@ if st.button("Add"):
         if amount and time:
             intake_tuple = (time, int(amount))
             st.session_state.intake.append(intake_tuple)
+            st.session_state.table_list = []
+            for i in range(len(st.session_state.intake)):
+                temp_dict = {"Time": st.session_state.intake[i][0], "Caffeine": st.session_state.intake[i][1]}
+                st.session_state.table_list.append(temp_dict)
     except Exception as e:
         print(f"An error occurred: {e}")
     
 if st.button("Clear"):
     st.session_state.intake = []
     st.session_state.table_list = []
-    
-for i in range(len(st.session_state.intake)):
-    temp_dict = {"Time": st.session_state.intake[i][0], "Caffeine": st.session_state.intake[i][1]}
-    st.session_state.table_list.append(temp_dict)
                  
 st.table(data=st.session_state.table_list)
 
