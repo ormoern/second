@@ -63,6 +63,7 @@ def handle_input(drink, time):
     try:
         if drink and check_time_format(time):
             est_caffeine = caffeine_amount[drink]
+            print(time, drink, est_caffeine)
             return time, drink, est_caffeine
         elif not check_time_format(time):
             st.info('Check time format (ex: 12.30)', icon="🕙")
