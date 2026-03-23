@@ -91,7 +91,7 @@ def handle_input(drink, time, cust_caff_amnt):
                 st.info("Invalid number.")
                 return None
             else:
-                drink and check_time_format(time):
+                drink and check_time_format(time)
                 est_caffeine = int(cust_caff_amnt)
                 return time, drink, est_caffeine
         else:
