@@ -53,7 +53,7 @@ def check_time_format(time):
     time_1 = time_list[0]
     time_2 = time_list[1]
     if 1 <= len(time_1) <= 2 and 1 <= len(time_2) <= 2:
-        if int(time_1) < 24 and int(time2) < 60:
+        if int(time_1) < 24 and int(time_2) < 60:
             st.write("Time format correct.")
             return True
     else:
