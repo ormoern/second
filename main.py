@@ -17,20 +17,19 @@ if "intake" not in st.session_state:
 time = st.text_input("Time", placeholder="00.00")
 amount = st.text_input("Caffeine amount", placeholder="100")
 
-
-
 if st.button("Add"):
     try:
         if amount and time:
             intake_tuple = (time, int(amount))
             st.session_state.intake.append(intake_tuple)
+            intake = st.session_state.intake
     except Exception as e:
         print(f"An error occurred: {e}")
     
 if st.button("Clear"):
     intake = []
 
-st.write("Input:", st.session_state.intake)
+st.write("Input:", intake)
 
 def time_to_int(time):
     time_list = time.split(".")
