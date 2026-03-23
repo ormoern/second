@@ -160,6 +160,9 @@ def absorption_half_life(intake, start_time, hours, start_caff):
         print(f"An error occurred: {e}")
     return x, y
 
+hrs_amnt = 32
+y_const = 40
+
 def ticks(amount):
   tick = []
   for i in range(amount):
@@ -172,9 +175,6 @@ def strings(ticks):
   for i in range(len(ticks)):
     strings.append(f"{ticks[i % 24]}:00")
   return strings
-
-hrs_amnt = 32
-y_const = 40
 
 if st.button("Show"):
     x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
