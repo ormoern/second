@@ -114,7 +114,6 @@ try:
         plt.tight_layout()
         st.pyplot(plt.gcf())
         st.session_state.intake = []
-        intake = []
 except Exception as e:
     print(f"An error occurred: {e}")
     
