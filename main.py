@@ -103,19 +103,22 @@ def strings(ticks):
   return strings
 
 try:
-    x_plot, y_plot = absorption_half_life(intake, 0, 30, 0)
+    if st.button("Show"):
+        x_plot, y_plot = absorption_half_life(intake, 0, 30, 0)
+        plt.plot(x_plot, y_plot)
+        plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
+        plt.xlabel('time')
+        plt.ylabel('caffeine, mg')
+        plt.axhline(y=y_const, color='r', linestyle='--')
+        plt.legend()
+        plt.tight_layout()
+        st.pyplot(plt.gcf())
+        st.session_state.intake = []
+        intake = []
 except Exception as e:
     print(f"An error occurred: {e}")
     
 hrs_amnt = 32
 y_const = 40
 
-if st.button("Show"):
-    plt.plot(x_plot, y_plot)
-    plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
-    plt.xlabel('time')
-    plt.ylabel('caffeine, mg')
-    plt.axhline(y=y_const, color='r', linestyle='--')
-    plt.legend()
-    plt.tight_layout()
-    st.pyplot(plt.gcf())
+
