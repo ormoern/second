@@ -11,10 +11,11 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
-intake_tuple = ()
+intake = []
 
 def add_to_list(amount, time):
-    intake_tuple += amount, time
+    intake_tuple = ()
+    intake_tuple += amount
     intake += intake_tuple
     return intake
     
@@ -27,8 +28,6 @@ time = st.text_input("Time", "00.00")
 
 st.button("Add", on_click=add_to_list(amount, time))
 st.button("Clear", on_click=clear(intake))
-
-intake = []
 
 st.text(intake)
 
