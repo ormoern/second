@@ -54,7 +54,6 @@ def check_time_format(time):
     time_2 = time_list[1]
     if 1 <= len(time_1) <= 2 and 1 <= len(time_2) <= 2:
         if int(time_1) < 24 and int(time_2) < 60:
-            st.write("Time format correct.")
             return True
     else:
         return False
@@ -67,26 +66,20 @@ def handle_input(drink, time):
             return time, drink, est_caffeine
         elif not check_time_format(time):
             st.info('Check time format (ex: 12.30)', icon="🕙")
-            print("Time format wrong.")
             return None
-        elif drink and time is not None:
+        elif drink and time is None:
             st.info('No time...', icon="🕙")
-            print("No time.")
             return None
-        elif drink is not None and time:
+        elif drink is None and time:
             st.info('No drink...', icon="☕")
-            print("No drink.")
             return None
-        elif drink is not None and time is not None:
+        elif drink is None and time is None:
             st.info('Nothing...', icon="🤔")
-            print("Nothing.")
             return None
         else:
             st.info('Uhh, what?')
-            print('Undefined error.')
             return None
     except Exception as e:
-        print(f"An error occurred: {e}")
         return None
 
 def add_data(time, drink, est_caffeine):
@@ -103,7 +96,6 @@ if st.button("Add"):
     if handle_input(drink, time):
         time, drink, est_caffeine = handle_input(drink, time)
         add_data(time, drink, est_caffeine)
-        print("Drink added.")
 
     
 if st.button("Clear"):
