@@ -11,6 +11,8 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
+intake = []
+
 if "intake" not in st.session_state:
     st.session_state.intake = []
 
