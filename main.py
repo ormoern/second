@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1pr9KZXzbZYmhEudqQ0uR5Z_MmQAp9Prm
 """
 
+import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -96,4 +97,4 @@ plt.ylabel('caffeine, mg')
 plt.axhline(y=y_const, color='r', linestyle='--')
 plt.legend()
 plt.tight_layout()
-plt.show()
+st.pyplot(plt.gcf())
