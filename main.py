@@ -108,7 +108,8 @@ if st.button("Add"):
     if custom_drink != "" and custom_caff != "":
         time, drink, est_caffeine = handle_input(custom_drink, time, caff_amnt)
         add_data(time, drink, est_caffeine)
-    else handle_input(drink, time):
+    else: 
+        handle_input(drink, time)
         time, drink, est_caffeine = handle_input(drink, time)
         add_data(time, drink, est_caffeine)
 
