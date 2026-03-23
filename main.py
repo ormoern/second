@@ -14,7 +14,9 @@ import matplotlib.pyplot as plt
 
 if "intake" not in st.session_state:
     st.session_state.intake = []
-
+if "table_list" not in st.session_state:
+    st.session_state.table_list = []
+    
 time = st.text_input("Time", placeholder="00.00")
 amount = st.text_input("Caffeine amount", placeholder="100")
 
@@ -28,8 +30,12 @@ if st.button("Add"):
     
 if st.button("Clear"):
     st.session_state.intake = []
-
-st.table(data=st.session_state.intake)
+    
+for i in range(len(st.session_state.intake):
+    temp_dict = {"Time": st.session_state.intake[i][0], "Caffeine": st.session_state.intake[i][1]}
+    st.session_state.table_list.append(temp_dict)
+                 
+st.table(data=st.session_state.table_list)
 
 def time_to_int(time):
     time_list = time.split(".")
