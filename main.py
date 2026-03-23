@@ -22,8 +22,8 @@ def clear(intake):
     intake = []
     return intake
 
-amount = st.text_input("Caffeine amount", "100")
-time = st.text_input("Time", "00.00")
+amount = st.text_input("Caffeine amount")
+time = st.text_input("Time")
 
 st.button("Add", on_click=add_to_list(amount, time))
 st.button("Clear", on_click=clear(intake))
@@ -103,11 +103,12 @@ hrs_amnt = 32
 y_const = 40
 x_const = 23
 
-plt.plot(x_plot, y_plot)
-plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
-plt.xlabel('time')
-plt.ylabel('caffeine, mg')
-plt.axhline(y=y_const, color='r', linestyle='--')
-plt.legend()
-plt.tight_layout()
-st.pyplot(plt.gcf())
+if st.button("Show"):
+    plt.plot(x_plot, y_plot)
+    plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
+    plt.xlabel('time')
+    plt.ylabel('caffeine, mg')
+    plt.axhline(y=y_const, color='r', linestyle='--')
+    plt.legend()
+    plt.tight_layout()
+    st.pyplot(plt.gcf())
