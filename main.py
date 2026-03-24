@@ -232,7 +232,7 @@ def actions_on_show():
     plt.plot(x_plot, y_plot)
     plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
     plt.xlabel('time')
-    plt.ylabel('caffeine concentration, mg/kg')
+    plt.ylabel('caffeine blood concentration, mg/kg')
     plt.axhline(y=y_const, color='r', linestyle='--')
     plt.legend()
     plt.tight_layout()
