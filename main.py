@@ -108,8 +108,6 @@ def handle_input(drink, time, cust_caff_amnt):
 
         elif drink not in caffeine_amount:
             est_caffeine = int(cust_caff_amnt)
-            st.session_state.custom_drink = ""
-            st.session_state.custom_caff = ""
             return time, drink, est_caffeine
         else:
             st.info('Uhh, what?')
