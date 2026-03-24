@@ -149,12 +149,12 @@ def add_data(time, drink, est_caffeine, body_mass, metabol_speed):
     st.session_state.table_list = []
     st.session_state.b_mass = body_mass
     st.session_state.m_speed = metabol_speed
-    start_time = 0
+    start_time = 16
     for i in range(len(st.session_state.intake)):
         temp_dict = {"Time": st.session_state.intake[i][0], "Drink":  st.session_state.drinks[i], "Estimated caffeine, mg": st.session_state.intake[i][1]}
         st.session_state.table_list.append(temp_dict)
         intake_time = time_to_int(st.session_state.intake[i][0])
-        if intake_time > start_time:
+        if intake_time < start_time:
             start_time = intake_time
     st.session_state.start_time = start_time
     return
@@ -241,6 +241,7 @@ def actions_on_show():
         
         plt.clf()
         plt.plot(x_plot, y_plot)
+        plt.xlim(left=starting_time)
         plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
         plt.xlabel('time')
         plt.ylabel('caffeine blood concentration, mg/kg')
