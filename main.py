@@ -101,6 +101,7 @@ def handle_input(drink, time, cust_caff_amnt):
             return None
         elif cust_caff_amnt = "" and drink = "":
             st.info('Did you want to add a preset drink?', icon="🤔")
+            return None
         elif not re.match(r"^\d+$", cust_caff_amnt):
             st.info("Only numbers are allowed.")
             return None
