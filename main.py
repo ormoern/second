@@ -301,14 +301,14 @@ with col2:
         if st.button("Add"):
             if not enable_custom:
                 result = handle_input(drink, time, None)
-                result.append(body_mass)
-                result.append(metabol_s)
+                result_1 = (body_mass, metabol_s)
+                result_tot = result + result_1
             else: 
                 result = handle_input(custom_drink, time, custom_caff)
-                result.append(body_mass)
-                result.append(metabol_s)
+                result_1 = (body_mass, metabol_s)
+                result_tot = result + result_1
             if result:
-                add_data(*result) 
+                add_data(*result_tot) 
 
         if st.button("Clear"):
             st.session_state.intake = []
