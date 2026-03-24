@@ -25,6 +25,16 @@ if "drinks" not in st.session_state:
     st.session_state.drinks = []
 if "custom_state" not in st.session_state:
     st.session_state.custom_state = False
+if "custom_drink" not in st.session_state:
+    st.session_state.custom_drink = ""
+if "custom_caff" not in st.session_state:
+    st.session_state.custom_caff = ""
+
+enable_custom = st.session_state.custom_state
+
+if enable_custom:
+    st.session_state.custom_drink = ""
+    st.session_state.custom_caff = ""
 
 #drinks preset
 caffeine_amount = {
@@ -176,8 +186,6 @@ graph_container = st.container()
 
 col1, col2 = st.columns(2)
 
-enable_custom = st.session_state.custom_state
-
 with col1:
     with input_container:
         col1_1, col1_2 = st.columns(2)
@@ -214,9 +222,6 @@ with col1:
             key = "custom_caff",
             placeholder="100", 
             disabled = not enable_custom)
-
-if st.session_state.get("custom_state", False):
-    st.session_state.custom_drink = ""
 
 with col2:
     with data_table_container:   
