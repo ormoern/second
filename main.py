@@ -290,7 +290,9 @@ with graph_container:
         plt.legend()
         plt.tight_layout()
         st.pyplot(plt.gcf())
-
+    else:
+        curr_caff_level = 0
+        safe_to_sleep_value = True
 with col3:
     st.text(f"Current caffeine level, mg: {curr_caff_level}")
     st.text(f"Safe to go to sleep: {safe_to_sleep_value}")
