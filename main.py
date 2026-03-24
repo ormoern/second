@@ -205,6 +205,25 @@ def safe_to_sleep(current_caffeine_level):
     else:
         return False
 
+def actions_on_show():
+    x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
+
+    st.session_state.curr_caff_lvl = current_caffeine_level(x_plot, y_plot)
+    curr_caff_level = st.session_state.curr_caff_lvl
+    st.session_state.safe_to_sleep = safe_to_sleep(curr_caff_level)
+    safe_to_sleep_value =  st.session_state.safe_to_sleep
+    
+    plt.clf()
+    plt.plot(x_plot, y_plot)
+    plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
+    plt.xlabel('time')
+    plt.ylabel('caffeine, mg')
+    plt.axhline(y=y_const, color='r', linestyle='--')
+    plt.legend()
+    plt.tight_layout()
+    st.pyplot(plt.gcf())
+    return
+
 #containers
 input_container = st.container()
 data_table_container = st.container()
@@ -268,33 +287,16 @@ with col2:
             st.session_state.safe_to_sleep = True
 
         st.table(data=st.session_state.table_list)
+
 with col3:
-    curr_caff_level = 0
-    safe_to_sleep_value = True
+    st.session_state.curr_caff_lvl = 0
+    st.session_state.safe_to_sleep = True
     st.text(f"Current caffeine level, mg: {curr_caff_level}")
     st.text(f"Safe to go to sleep: {safe_to_sleep_value}")
 
 with graph_container:
     if st.button("Show"):
-        x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
-
-        st.session_state.curr_caff_lvl = current_caffeine_level(x_plot, y_plot)
-        curr_caff_level = st.session_state.curr_caff_lvl
-        st.session_state.safe_to_sleep = safe_to_sleep(curr_caff_level)
-        safe_to_sleep_value =  st.session_state.safe_to_sleep
-        
-        plt.clf()
-        plt.plot(x_plot, y_plot)
-        plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
-        plt.xlabel('time')
-        plt.ylabel('caffeine, mg')
-        plt.axhline(y=y_const, color='r', linestyle='--')
-        plt.legend()
-        plt.tight_layout()
-        st.pyplot(plt.gcf())
-    else:
-        curr_caff_level = 0
-        safe_to_sleep_value = True
+        actions_on_show()
 
 
 
