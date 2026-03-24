@@ -175,10 +175,8 @@ graph_container = st.container()
 with input_container:   
     time = st.text_input("Time", placeholder="00.00")
 
-    custom_drink_expander = st.expander("Add custom drink.", 
-    expanded = enabled)
-
     enable_custom_drink = st.checkbox("Add custom drink.")
+    custom_drink_expander = st.expander(expanded = enable_custom_drink)
     with custom_drink_expander:
         custom_drink = st.text_input("Custom drink", 
         placeholder = "Drink", 
