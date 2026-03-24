@@ -203,7 +203,6 @@ with col1:
                 "Add custom drink.", 
                 value = st.session_state.get("custom_state", False), 
                 key = "custom_state"
-                on_change = if
                 )
             custom_drink = st.text_input("Custom drink", 
             key = "custom_drink",
