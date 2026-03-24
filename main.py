@@ -205,11 +205,17 @@ with col1:
                 key = "custom_state"
                 )
             custom_drink = st.text_input("Custom drink", 
-            placeholder = "Drink", 
+            placeholder = "Drink",
+            key = "custom_drink",
             disabled = not enable_custom)
             custom_caff = st.text_input("Caffeine amount, mg", 
             placeholder="100", 
+            key = "custom_caff",
             disabled = not enable_custom)
+            if not enable_custom:
+                st.session_state.custom_caff = ""
+                st.session_state.custom_drink = ""
+                
 
 with col2:
     with data_table_container:   
