@@ -41,8 +41,6 @@ if "safe_to_sleep" not in st.session_state:
     st.session_state.safe_to_sleep = True
 
 enable_custom = st.session_state.custom_state
-curr_caff_level = st.session_state.curr_caff_lvl
-safe_to_sleep_value =  st.session_state.safe_to_sleep
 
 #drinks preset
 caffeine_amount = {
@@ -290,6 +288,9 @@ with graph_container:
         plt.legend()
         plt.tight_layout()
         st.pyplot(plt.gcf())
+
+curr_caff_level = st.session_state.curr_caff_lvl
+safe_to_sleep_value =  st.session_state.safe_to_sleep
 
 with col3:
     st.text(f"Current caffeine level, mg: {curr_caff_level}")
