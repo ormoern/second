@@ -40,7 +40,7 @@ if "curr_caff_lvl" not in st.session_state:
 if "safe_to_sleep" not in st.session_state:
     st.session_state.safe_to_sleep = True
 if "b_mass" not in st.session_state:
-    st.session_state.body_m = ""
+    st.session_state.b_mass = ""
 if "m_speed" not in st.session_state:
     st.session_state.m_speed = ""
 
