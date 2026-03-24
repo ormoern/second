@@ -324,5 +324,5 @@ with graph_container:
 with graph_data_container:
     curr_caff_level = st.session_state.curr_caff_lvl
     safe_to_sleep_value = st.session_state.safe_to_sleep
-    st.text(f"Current caffeine level at {current_time} EET: {curr_caff_level}mg.")
+    st.text(f"Current estimated caffeine level in blood at {current_time} EET: {curr_caff_level}mg.")
 
