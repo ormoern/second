@@ -250,7 +250,7 @@ def actions_on_show():
         st.pyplot(plt.gcf())
         return
     else:
-        st.info('No body mass... Ethereal...', icon="")
+        st.info('No body mass... Ethereal...', icon="...")
         return
 
 #containers
