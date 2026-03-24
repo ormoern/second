@@ -124,8 +124,6 @@ def add_data(time, drink, est_caffeine):
     for i in range(len(st.session_state.intake)):
         temp_dict = {"Time": st.session_state.intake[i][0], "Drink":  st.session_state.drinks[i], "Estimated caffeine, mg": st.session_state.intake[i][1]}
         st.session_state.table_list.append(temp_dict)
-    st.session_state.custom_drink = ""
-    st.session_state.custom_caff = ""
     return
 
 #main script logic
@@ -228,6 +226,8 @@ with col2:
                 result = handle_input(drink, time, None)
             else: 
                 result = handle_input(custom_drink, time, custom_caff)
+                st.session_state.custom_drink = ""
+                st.session_state.custom_caff = ""
 
             if result:
                 add_data(*result) 
