@@ -277,8 +277,12 @@ with col2:
 with graph_container:
     if st.button("Show"):
         x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
+
         st.session_state.curr_caff_lvl = current_caffeine_level(x_plot, y_plot)
         st.session_state.safe_to_sleep = safe_to_sleep(curr_caff_level)
+        
+        plt.clf()
+        plt.plot(x_plot, y_plot)
         plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
         plt.xlabel('time')
         plt.ylabel('caffeine, mg')
