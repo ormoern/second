@@ -203,6 +203,7 @@ with col1:
                 "Add custom drink.", 
                 value = st.session_state.get("custom_state", False), 
                 key = "custom_state"
+                on_change = if
                 )
             custom_drink = st.text_input("Custom drink", 
             key = "custom_drink",
@@ -212,10 +213,10 @@ with col1:
             key = "custom_caff",
             placeholder="100", 
             disabled = not enable_custom)
-            if st.session_state.custom_caff and st.session_state.custom_drink and not enable_custom:
-                st.session_state.custom_caff = ""
-                st.session_state.custom_drink = ""
-                
+
+if st.session_state.custom_caff and st.session_state.custom_drink and not enable_custom:
+    st.session_state.custom_caff = ""
+    st.session_state.custom_drink = ""
 
 with col2:
     with data_table_container:   
