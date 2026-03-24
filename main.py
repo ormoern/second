@@ -23,6 +23,8 @@ if "table_list" not in st.session_state:
     st.session_state.table_list = []
 if "drinks" not in st.session_state:
     st.session_state.drinks = []
+if "custom_state" not in st.session_state:
+    st.session_state.custom_state = False
 
 #drinks preset
 caffeine_amount = {
@@ -191,11 +193,12 @@ with col1:
             "Green tea (300ml)", 
             "Energy drink (250ml)", 
             "Energy drink (500ml)"),
-            disabled = enable_custom_drink
+            disabled = st.session_state.custom_state
             )
 
         with col1_2:
-            enable_custom_drink = st.checkbox("Add custom drink.")
+            st.session_state.custom_state = st.checkbox("Add custom drink.")
+            enable_custom = st.session_state.custom_state
 
             with st.expander("", 
             expanded = enable_custom_drink):
