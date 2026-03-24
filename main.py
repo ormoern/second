@@ -277,7 +277,9 @@ with graph_container:
         x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
 
         st.session_state.curr_caff_lvl = current_caffeine_level(x_plot, y_plot)
+        curr_caff_level = st.session_state.curr_caff_lvl
         st.session_state.safe_to_sleep = safe_to_sleep(curr_caff_level)
+        safe_to_sleep_value =  st.session_state.safe_to_sleep
         
         plt.clf()
         plt.plot(x_plot, y_plot)
@@ -288,9 +290,6 @@ with graph_container:
         plt.legend()
         plt.tight_layout()
         st.pyplot(plt.gcf())
-
-curr_caff_level = st.session_state.curr_caff_lvl
-safe_to_sleep_value =  st.session_state.safe_to_sleep
 
 with col3:
     st.text(f"Current caffeine level, mg: {curr_caff_level}")
