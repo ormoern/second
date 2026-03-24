@@ -38,9 +38,10 @@ if "custom_caff" not in st.session_state:
 if "curr_caff_lvl" not in st.session_state:
     st.session_state.curr_caff_lvl = 0
 if "safe_to_sleep" not in st.session_state:
-    st.session_state.safe_to_sleep = False
+    st.session_state.safe_to_sleep = True
 
 enable_custom = st.session_state.custom_state
+curr_caff_level = st.session_state.curr_caff_lvl
 
 #drinks preset
 caffeine_amount = {
@@ -200,12 +201,19 @@ def curr_caff(x, y):
     y_value = np.interp(target_x, x_data, y_data)
     return y_value
 
+#calculate is it safe to sleep
+def safe_to_sleep(curr_caff):
+    if curr_caff < 40:
+        return True
+    else:
+        return False
+
 #containers
 input_container = st.container()
 data_table_container = st.container()
 graph_container = st.container()
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 with col1:
     with input_container:
@@ -259,14 +267,20 @@ with col2:
             st.session_state.intake = []
             st.session_state.table_list = []
             st.session_state.drinks = []
+            st.session_state.curr_caff_lvl = 0
+            st.session_state.safe_to_sleep = True
 
         st.table(data=st.session_state.table_list)
+
+with col3:
+    caff_lvl = st.text(f"Current caffeine level, mg: f{curr_caff_level})
 
 with graph_container:
     if st.button("Show"):
         x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
         plt.plot(x_plot, y_plot)
-        st.info(f"curre_caff: {curr_caff(x_plot, y_plot)}")
+        st.session_state.curr_caff_lvl = curr_caff(x_plot, y_plot)
+        st.session_state.safe_to_sleep = safe_to_sleep(curr_caff_level)
         plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
         plt.xlabel('time')
         plt.ylabel('caffeine, mg')
