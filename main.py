@@ -32,7 +32,7 @@ if "custom_caff" not in st.session_state:
 
 enable_custom = st.session_state.custom_state
 
-if enable_custom:
+if enable_custom and st.session_state.custom_drink and st.session_state.custom_caff:
     st.session_state.custom_drink = ""
     st.session_state.custom_caff = ""
 
