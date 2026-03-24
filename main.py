@@ -138,11 +138,13 @@ def handle_input(drink, time, cust_caff_amnt):
         return None
 
 #data handling
-def add_data(time, drink, est_caffeine):
+def add_data(time, drink, est_caffeine, body_mass, metabol_speed):
     st.session_state.drinks.append(drink)
     intake_tuple = (time, est_caffeine)
     st.session_state.intake.append(intake_tuple)
     st.session_state.table_list = []
+    st.session_state.b_mass = body_mass
+    st.session_state.m_speed = metabol_speed
     for i in range(len(st.session_state.intake)):
         temp_dict = {"Time": st.session_state.intake[i][0], "Drink":  st.session_state.drinks[i], "Estimated caffeine, mg": st.session_state.intake[i][1]}
         st.session_state.table_list.append(temp_dict)
@@ -218,8 +220,6 @@ def safe_to_sleep(current_caffeine_level):
         return False
 
 def actions_on_show():
-    body_mass = st.session_state.b_mass
-    metabol_speed = st.session_state.m_speed
     body_mass_int = int(st.session_state.body_m)
     metabolism_s = metabolism_speed_values[st.session_state.m_speed]
     
@@ -301,9 +301,12 @@ with col2:
         if st.button("Add"):
             if not enable_custom:
                 result = handle_input(drink, time, None)
+                result.append(body_mass)
+                result.append(metabol_s)
             else: 
                 result = handle_input(custom_drink, time, custom_caff)
-
+                result.append(body_mass)
+                result.append(metabol_s)
             if result:
                 add_data(*result) 
 
