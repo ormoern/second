@@ -175,6 +175,17 @@ graph_container = st.container()
 with input_container:   
     time = st.text_input("Time", placeholder="00.00")
 
+    enable_custom_drink = st.checkbox("Add custom drink.")
+
+    with st.expander("Enter custom drink.", 
+    expanded = enable_custom_drink):
+        custom_drink = st.text_input("Custom drink", 
+        placeholder = "Drink", 
+        disabled = not enable_custom_drink)
+        custom_caff = st.text_input("Caffeine amount, mg", 
+        placeholder="100", 
+        disabled = not enable_custom_drink)
+    
     drink = st.selectbox(
         "Drink",
         ("Espresso", 
@@ -190,16 +201,6 @@ with input_container:
         disabled = enable_custom_drink
     )
 
-    enable_custom_drink = st.checkbox("Add custom drink.")
-    
-    with st.expander("Enter custom drink.", 
-    expanded = enable_custom_drink):
-        custom_drink = st.text_input("Custom drink", 
-        placeholder = "Drink", 
-        disabled = not enable_custom_drink)
-        custom_caff = st.text_input("Caffeine amount, mg", 
-        placeholder="100", 
-        disabled = not enable_custom_drink)
     
     if st.button("Add"):
         if custom_drink == "" and custom_caff == "":
