@@ -12,12 +12,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import re
 from datetime import datetime
+import pytz
 
 #graph params
 hrs_amnt = 32
 y_const = 40
 
-now = datetime.now()
+tz_Tln = pytz.timezone('Europe/Tallinn') 
+now = datetime.now(tz_Tln)
 current_time = now.strftime("%H.%M")
 
 #sessional variables
@@ -81,9 +83,13 @@ def strings(ticks):
 
 def time_to_int(time):
     time_list = time.split(".")
+    print(time_list)
     time_1 = int(time_list[0])
+    print(time_1)
     time_2 = int(time_list[1])
+    print(time_2)
     time_int = round((time_1 + (time_2 / 60)), 2)
+    print(time_int)
     return time_int
 
 #input handling
