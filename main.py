@@ -186,7 +186,7 @@ with input_container:
         "Black tea (300ml)", 
         "Green tea (300ml)", 
         "Energy drink (250ml)", 
-        "Energy drink (500ml)")
+        "Energy drink (500ml)"),
         disabled = enable_custom_drink
     )
 
