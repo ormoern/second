@@ -208,7 +208,7 @@ def current_caffeine_level(x, y):
 
     target_x = time_to_int(current_time)
     y_value = np.interp(target_x, x_data, y_data)
-    return round(y_value)
+    return round(y_value, 2)
 
 #calculate is it safe to sleep
 def safe_to_sleep(current_caffeine_level):
