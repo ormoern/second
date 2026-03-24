@@ -193,6 +193,7 @@ def curr_caff(x, y):
     y_data = line.get_ydata()
 
     target_x = time_to_int(current_time)
+    print(target_x)
     y_value = np.interp(target_x, x_data, y_data)
     return y_value
 
@@ -262,6 +263,7 @@ with graph_container:
     if st.button("Show"):
         x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
         plt.plot(x_plot, y_plot)
+        st.info(current_time)
         st.info(curr_caff(x_plot, y_plot))
         plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
         plt.xlabel('time')
