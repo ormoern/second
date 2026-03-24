@@ -227,27 +227,31 @@ def safe_to_sleep(current_caffeine_level):
         return False
 
 def actions_on_show():
-    body_mass_int = int(st.session_state.b_mass)
-    metabolism_s = metabolism_speed_values[st.session_state.m_speed]
-    starting_time = st.session_state.start_time
+    if st.session_state.b_mass:
+        body_mass_int = int(st.session_state.b_mass)
+        metabolism_s = metabolism_speed_values[st.session_state.m_speed]
+        starting_time = st.session_state.start_time
 
-    x_plot, y_plot = absorption_half_life(st.session_state.intake, starting_time, hrs_amnt, 0, body_mass_int, metabolism_s)
+        x_plot, y_plot = absorption_half_life(st.session_state.intake, starting_time, hrs_amnt, 0, body_mass_int, metabolism_s)
 
-    st.session_state.curr_caff_lvl = current_caffeine_level(x_plot, y_plot)
-    curr_caff_level = st.session_state.curr_caff_lvl
-    st.session_state.safe_to_sleep = safe_to_sleep(curr_caff_level)
-    safe_to_sleep_value =  st.session_state.safe_to_sleep
-    
-    plt.clf()
-    plt.plot(x_plot, y_plot)
-    plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
-    plt.xlabel('time')
-    plt.ylabel('caffeine blood concentration, mg/kg')
-    plt.axhline(y=y_const, color='r', linestyle='--')
-    plt.legend()
-    plt.tight_layout()
-    st.pyplot(plt.gcf())
-    return
+        st.session_state.curr_caff_lvl = current_caffeine_level(x_plot, y_plot)
+        curr_caff_level = st.session_state.curr_caff_lvl
+        st.session_state.safe_to_sleep = safe_to_sleep(curr_caff_level)
+        safe_to_sleep_value =  st.session_state.safe_to_sleep
+        
+        plt.clf()
+        plt.plot(x_plot, y_plot)
+        plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
+        plt.xlabel('time')
+        plt.ylabel('caffeine blood concentration, mg/kg')
+        plt.axhline(y=y_const, color='r', linestyle='--')
+        plt.legend()
+        plt.tight_layout()
+        st.pyplot(plt.gcf())
+        return
+    else:
+        st.info('No body mass... Ethereal...', icon="")
+        return
 
 #containers
 input_container = st.container()
