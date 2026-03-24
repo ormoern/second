@@ -169,12 +169,12 @@ def absorption_half_life(intake, start_time, hours, start_caff, body_mass, half_
             intake_time = time_to_int(intake[i][0])
             intake_caff = intake[i][1]
 
-            curr_conc = curr_caff / body_mass
+            curr_conc = (curr_caff / body_mass)
             start_x = intake_time
             start_y = curr_conc
             
             curr_caff = curr_caff + intake_caff
-            curr_conc = curr_caff / body_mass
+            curr_conc = (curr_caff / body_mass)
 
             decay_start = intake_time + 0.75
             end_x = decay_start
