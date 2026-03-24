@@ -288,16 +288,13 @@ with col2:
 
         st.table(data=st.session_state.table_list)
 
+with graph_container:
+    if st.button("Show"):
+        actions_on_show()
+
 with col3:
     curr_caff_level = st.session_state.curr_caff_lvl
     safe_to_sleep_value = st.session_state.safe_to_sleep
     st.text(f"Current caffeine level, mg: {curr_caff_level}")
     st.text(f"Safe to go to sleep: {safe_to_sleep_value}")
-
-
-with graph_container:
-    if st.button("Show"):
-        actions_on_show()
-
-
 
