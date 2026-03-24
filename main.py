@@ -99,7 +99,7 @@ def time_to_int(time):
     return time_int
 
 #input handling
-def handle_input(drink, time, cust_caff_amnt, body_mass, metabolism_speed):
+def handle_input(drink, time, cust_caff_amnt):
     print("start check")
     try:
         if time == "":
