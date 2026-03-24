@@ -176,8 +176,9 @@ with input_container:
     time = st.text_input("Time", placeholder="00.00")
 
     enable_custom_drink = st.checkbox("Add custom drink.")
-    custom_drink_expander = st.expander(expanded = enable_custom_drink)
-    with custom_drink_expander:
+    
+    with st.expander("Enter custom drink.", 
+    expanded = enable_custom_drink):
         custom_drink = st.text_input("Custom drink", 
         placeholder = "Drink", 
         disabled = not enable_custom_drink)
