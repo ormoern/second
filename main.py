@@ -26,6 +26,8 @@ if "drinks" not in st.session_state:
 if "custom_state" not in st.session_state:
     st.session_state.custom_state = False
 
+enable_custom = st.session_state.custom_state
+
 #drinks preset
 caffeine_amount = {
     "Espresso": 65,
@@ -86,23 +88,23 @@ def handle_input(drink, time, cust_caff_amnt):
         elif drink in caffeine_amount:
             est_caffeine = caffeine_amount[drink]
             return time, drink, est_caffeine
+        elif enable_custom:
+            if cust_caff_amnt == "" and drink:
+                st.info('No caffeine amount, yet there is a drink...', icon="🤔")
+                return None
+            elif cust_caff_amnt and drink == "":
+                st.info('No custom drink, yet there is a caffeine amount...', icon="🤔")
+                return None
+            elif not re.match(r"^\d+$", cust_caff_amnt):
+                st.info("Only numbers are allowed.")
+                return None
+            elif int(cust_caff_amnt) <= 1 or int(cust_caff_amnt) >= 1000:
+                st.info("Invalid number.")
+                return None
 
-        elif cust_caff_amnt == "" and drink:
-            st.info('No caffeine amount, yet there is a drink...', icon="🤔")
-            return None
-        elif cust_caff_amnt and drink == "":
-            st.info('No custom drink, yet there is a caffeine amount...', icon="🤔")
-            return None
-        elif not re.match(r"^\d+$", cust_caff_amnt):
-            st.info("Only numbers are allowed.")
-            return None
-        elif int(cust_caff_amnt) <= 1 or int(cust_caff_amnt) >= 1000:
-            st.info("Invalid number.")
-            return None
-
-        elif drink not in caffeine_amount:
-            est_caffeine = int(cust_caff_amnt)
-            return time, drink, est_caffeine
+            elif drink not in caffeine_amount:
+                est_caffeine = int(cust_caff_amnt)
+                return time, drink, est_caffeine
         else:
             st.info('Uhh, what?')
             return None
@@ -175,8 +177,6 @@ data_table_container = st.container()
 graph_container = st.container()
 
 col1, col2 = st.columns(2)
-
-enable_custom = st.session_state.custom_state
 
 with col1:
     with input_container:
