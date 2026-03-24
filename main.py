@@ -177,7 +177,7 @@ with input_container:
 
     enable_custom_drink = st.checkbox("Add custom drink.")
 
-    with st.expander("Enter custom drink.", 
+    with st.expander("", 
     expanded = enable_custom_drink):
         custom_drink = st.text_input("Custom drink", 
         placeholder = "Drink", 
