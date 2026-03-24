@@ -99,7 +99,7 @@ def handle_input(drink, time, cust_caff_amnt):
         elif cust_caff_amnt and drink == "":
             st.info('No custom drink, yet there is a caffeine amount...', icon="🤔")
             return None
-        elif cust_caff_amnt = "" and drink = "":
+        elif cust_caff_amnt == "" and drink == "":
             st.info('Did you want to add a preset drink?', icon="🤔")
             return None
         elif not re.match(r"^\d+$", cust_caff_amnt):
