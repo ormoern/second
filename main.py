@@ -194,7 +194,7 @@ with col1:
             "Green tea (300ml)", 
             "Energy drink (250ml)", 
             "Energy drink (500ml)"),
-            disabled = enable_custom
+            disabled = not enable_custom
             )
 
         with col1_2:
