@@ -108,8 +108,6 @@ def handle_input(drink, time, cust_caff_amnt, body_mass, metabolism_speed):
         elif not check_time_format(time):
             st.info('Check time format (ex: 12.30)', icon="🕙")
             return None
-        elif not re.match(r"^\d+$", cust_caff_amnt):
-            st.info("Check body mass. Only numbers are allowed.")
         elif drink in caffeine_amount:
             est_caffeine = caffeine_amount[drink]
             st.session_state.body_m = body_mass
