@@ -188,7 +188,7 @@ with col1:
             time = st.text_input("Time", placeholder="00.00")
             if time:
                 init = True
-            if init:
+            if init and not enable_custom:
                 enable_custom = False
             drink = st.selectbox(
             "Drink",
