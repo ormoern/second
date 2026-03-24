@@ -32,10 +32,6 @@ if "custom_caff" not in st.session_state:
 
 enable_custom = st.session_state.custom_state
 
-if enable_custom and st.session_state.custom_drink and st.session_state.custom_caff:
-    st.session_state.custom_drink = ""
-    st.session_state.custom_caff = ""
-
 #drinks preset
 caffeine_amount = {
     "Espresso": 65,
@@ -112,6 +108,8 @@ def handle_input(drink, time, cust_caff_amnt):
 
         elif drink not in caffeine_amount:
             est_caffeine = int(cust_caff_amnt)
+            st.session_state.custom_drink = ""
+            st.session_state.custom_caff = ""
             return time, drink, est_caffeine
         else:
             st.info('Uhh, what?')
