@@ -181,6 +181,7 @@ with col1:
         col1_1, col1_2 = st.columns(2)
         with col1_1:   
             time = st.text_input("Time", placeholder="00.00")
+            enable_custom = st.session_state.custom_state 
             drink = st.selectbox(
             "Drink",
             ("Espresso", 
@@ -193,7 +194,7 @@ with col1:
             "Green tea (300ml)", 
             "Energy drink (250ml)", 
             "Energy drink (500ml)"),
-            disabled = not st.session_state.custom_state
+            disabled = enable_custom
             )
 
         with col1_2:
