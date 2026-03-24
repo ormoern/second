@@ -110,8 +110,6 @@ def handle_input(drink, time, cust_caff_amnt, body_mass, metabolism_speed):
             return None
         elif drink in caffeine_amount:
             est_caffeine = caffeine_amount[drink]
-            st.session_state.body_m = body_mass
-            st.session_state.m_speed = metabolism_speed
             return time, drink, est_caffeine
 
         elif cust_caff_amnt == "" and drink:
@@ -132,8 +130,6 @@ def handle_input(drink, time, cust_caff_amnt, body_mass, metabolism_speed):
 
         elif drink not in caffeine_amount:
             est_caffeine = int(cust_caff_amnt)
-            st.session_state.body_m = body_mass
-            st.session_state.m_speed = metabolism_speed
             return time, drink, est_caffeine
         else:
             st.info('Uhh, what?')
@@ -222,6 +218,8 @@ def safe_to_sleep(current_caffeine_level):
         return False
 
 def actions_on_show():
+    body_mass = st.session_state.b_mass
+    metabol_speed = st.session_state.m_speed
     body_mass_int = int(st.session_state.body_m)
     metabolism_s = metabolism_speed_values[st.session_state.m_speed]
     
@@ -302,9 +300,9 @@ with col2:
     with data_table_container:   
         if st.button("Add"):
             if not enable_custom:
-                result = handle_input(drink, time, None, body_mass, metabol_speed)
+                result = handle_input(drink, time, None)
             else: 
-                result = handle_input(custom_drink, time, custom_caff, body_mass, metabol_speed)
+                result = handle_input(custom_drink, time, custom_caff)
 
             if result:
                 add_data(*result) 
