@@ -42,6 +42,7 @@ if "safe_to_sleep" not in st.session_state:
 
 enable_custom = st.session_state.custom_state
 curr_caff_level = st.session_state.curr_caff_lvl
+safe_to_sleep =  st.session_state.safe_to_sleep
 
 #drinks preset
 caffeine_amount = {
@@ -273,7 +274,8 @@ with col2:
         st.table(data=st.session_state.table_list)
 
 with col3:
-    caff_lvl = st.text(f"Current caffeine level, mg: f{curr_caff_level})
+    st.text(f"Current caffeine level, mg: {curr_caff_level}")
+    st.text(f"Safe to go to sleep: {safe_to_sleep}")
 
 with graph_container:
     if st.button("Show"):
