@@ -176,12 +176,13 @@ graph_container = st.container()
 
 col1, col2 = st.columns(2)
 
+enable_custom = st.session_state.custom_state
+
 with col1:
     with input_container:
         col1_1, col1_2 = st.columns(2)
         with col1_1:   
             time = st.text_input("Time", placeholder="00.00")
-            enable_custom = st.session_state.custom_state 
             drink = st.selectbox(
             "Drink",
             ("Espresso", 
@@ -198,7 +199,11 @@ with col1:
             )
 
         with col1_2:
-            enable_custom = st.checkbox("Add custom drink.")
+            enable_custom = st.checkbox(
+                "Add custom drink.", 
+                value = st.session_state.get("custom_state", False), 
+                key = "custom_state"
+                )
             custom_drink = st.text_input("Custom drink", 
             placeholder = "Drink", 
             disabled = not enable_custom)
