@@ -187,7 +187,6 @@ with input_container:
         "Green tea (300ml)", 
         "Energy drink (250ml)", 
         "Energy drink (500ml)")
-        placeholder= "Choose drink...",
         disabled = enable_custom_drink
     )
 
