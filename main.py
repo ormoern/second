@@ -142,7 +142,6 @@ def add_data(time, drink, est_caffeine):
 #main script logic
 def absorption_half_life(intake, start_time, hours, start_caff):
     try:
-        st.info(intake)
         x = np.linspace(start_time, hours, 300)
         half_life = 5.70
         
@@ -196,8 +195,6 @@ def current_caffeine_level(x, y):
     y_data = line.get_ydata()
 
     target_x = time_to_int(current_time)
-    st.info(f"current time: {current_time}")
-    st.info(f"target_x: {target_x}")
     y_value = np.interp(target_x, x_data, y_data)
     return y_value
 
@@ -271,6 +268,11 @@ with col2:
             st.session_state.safe_to_sleep = True
 
         st.table(data=st.session_state.table_list)
+with col3:
+    curr_caff_level = 0
+    safe_to_sleep_level = True
+    st.text(f"Current caffeine level, mg: {curr_caff_level}")
+    st.text(f"Safe to go to sleep: {safe_to_sleep_value}")
 
 with graph_container:
     if st.button("Show"):
@@ -293,9 +295,6 @@ with graph_container:
     else:
         curr_caff_level = 0
         safe_to_sleep_value = True
-with col3:
-    st.text(f"Current caffeine level, mg: {curr_caff_level}")
-    st.text(f"Safe to go to sleep: {safe_to_sleep_value}")
 
 
 
