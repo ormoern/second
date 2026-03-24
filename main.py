@@ -151,13 +151,13 @@ def add_data(time, drink, est_caffeine, body_mass, metabol_speed):
     return
 
 #main script logic
-def absorption_half_life(intake, start_time, hours, start_caff, body_mass, half_life):
+def absorption_half_life(intake, start_time, hours, start_conc, body_mass, half_life):
     try:
         x = np.linspace(start_time, hours, 300)
         
         intake_len = len(intake)
         
-        curr_caff = start_caff
+        curr_conc = start_conc
         
         decay_start = 0
         
@@ -169,14 +169,12 @@ def absorption_half_life(intake, start_time, hours, start_caff, body_mass, half_
             intake_time = time_to_int(intake[i][0])
             intake_caff = intake[i][1]
 
-            curr_conc = (curr_caff / body_mass)
             start_x = intake_time
             start_y = curr_conc
             
-            curr_caff = curr_caff + intake_caff
-            curr_conc = (curr_caff / body_mass)
-
+            curr_conc = curr_conc + (intake_caff / body_mass)
             decay_start = intake_time + 0.75
+
             end_x = decay_start
             end_y = curr_conc
         
@@ -186,14 +184,14 @@ def absorption_half_life(intake, start_time, hours, start_caff, body_mass, half_
         
             #decay
             # Calculate decay starting from decay_start
-            y_decay_full = curr_caff * (0.5)**((x - decay_start)/half_life)
+            y_decay_full = curr_conc * (0.5)**((x - decay_start)/half_life)
         
             if i != (intake_len - 1):
               x_stop = time_to_int(intake[i+1][0])
               y_decay = np.where((x > end_x) & (x <= x_stop), y_decay_full, 0)
-              # Update curr_caff for the next absorption phase based on decay at x_stop
+              # Update curr_conc and curr_conc for the next absorption phase based on decay at x_stop
               if np.any(x >= x_stop):
-                  curr_caff = curr_caff * (0.5)**((x_stop - decay_start)/half_life)
+                  curr_conc = curr_conc * (0.5)**((x_stop - decay_start)/half_life)
             else:
                 y_decay = np.where(x > end_x, y_decay_full, 0)
     
