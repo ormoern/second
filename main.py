@@ -167,7 +167,6 @@ def absorption_half_life(intake, start_time, hours, start_caff):
             curr_caff = curr_caff + intake_caff
             decay_start = intake_time + 0.75
             end_x = decay_start
-            st.info(end_x)
             end_y = curr_caff
         
             # Calculate absorption only for the absorption phase
@@ -193,7 +192,7 @@ def absorption_half_life(intake, start_time, hours, start_caff):
     return x, y
 
 #get caff for current time
-def curr_caff(x, y):
+def current_caffeine_level(x, y):
     line, = plt.plot(x, y)
     x_data = line.get_xdata()
     y_data = line.get_ydata()
@@ -205,8 +204,8 @@ def curr_caff(x, y):
     return y_value
 
 #calculate is it safe to sleep
-def safe_to_sleep(curr_caff):
-    if curr_caff < 40:
+def safe_to_sleep(current_caffeine_level):
+    if current_caffeine_level < 40:
         return True
     else:
         return False
@@ -279,7 +278,7 @@ with graph_container:
     if st.button("Show"):
         x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
         plt.plot(x_plot, y_plot)
-        st.session_state.curr_caff_lvl = curr_caff(x_plot, y_plot)
+        st.session_state.curr_caff_lvl = current_caffeine_level(x_plot, y_plot)
         st.session_state.safe_to_sleep = safe_to_sleep(curr_caff_level)
         plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
         plt.xlabel('time')
