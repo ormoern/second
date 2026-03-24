@@ -196,7 +196,7 @@ def current_caffeine_level(x, y):
 
     target_x = time_to_int(current_time)
     y_value = np.interp(target_x, x_data, y_data)
-    return y_value
+    return round(y_value)
 
 #calculate is it safe to sleep
 def safe_to_sleep(current_caffeine_level):
@@ -296,6 +296,5 @@ with graph_container:
 with graph_data_container:
     curr_caff_level = st.session_state.curr_caff_lvl
     safe_to_sleep_value = st.session_state.safe_to_sleep
-    st.text(f"Current caffeine level, mg: {curr_caff_level}")
-    st.text(f"Safe to go to sleep: {safe_to_sleep_value}")
+    st.text(f"Current caffeine level at {current_time} EET, mg: {curr_caff_level}")
 
