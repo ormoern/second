@@ -172,52 +172,57 @@ input_container = st.container()
 data_table_container = st.container()
 graph_container = st.container()
 
-with input_container:   
-    time = st.text_input("Time", placeholder="00.00")
+col1, col2 = st.columns(2)
 
-    enable_custom_drink = st.checkbox("Add custom drink.")
+with col1:
+    with input_container:
+        col1_1, col1_2 = st.columns(2)
+        with col1_1:   
+            time = st.text_input("Time", placeholder="00.00")
+            drink = st.selectbox(
+            "Drink",
+            ("Espresso", 
+            "Double espresso", 
+            "Filter coffee", 
+            "Latte", 
+            "Cappuccino", 
+            "Flat white", 
+            "Black tea (300ml)", 
+            "Green tea (300ml)", 
+            "Energy drink (250ml)", 
+            "Energy drink (500ml)"),
+            disabled = enable_custom_drink
+            )
 
-    with st.expander("", 
-    expanded = enable_custom_drink):
-        custom_drink = st.text_input("Custom drink", 
-        placeholder = "Drink", 
-        disabled = not enable_custom_drink)
-        custom_caff = st.text_input("Caffeine amount, mg", 
-        placeholder="100", 
-        disabled = not enable_custom_drink)
-    
-    drink = st.selectbox(
-        "Drink",
-        ("Espresso", 
-        "Double espresso", 
-        "Filter coffee", 
-        "Latte", 
-        "Cappuccino", 
-        "Flat white", 
-        "Black tea (300ml)", 
-        "Green tea (300ml)", 
-        "Energy drink (250ml)", 
-        "Energy drink (500ml)"),
-        disabled = enable_custom_drink
-    )
+        with col1_2:
+            enable_custom_drink = st.checkbox("Add custom drink.")
 
-    
-    if st.button("Add"):
-        if custom_drink == "" and custom_caff == "":
-            result = handle_input(drink, time, None)
-        else: 
-            result = handle_input(custom_drink, time, custom_caff)
+            with st.expander("", 
+            expanded = enable_custom_drink):
+                custom_drink = st.text_input("Custom drink", 
+                placeholder = "Drink", 
+                disabled = not enable_custom_drink)
+                custom_caff = st.text_input("Caffeine amount, mg", 
+                placeholder="100", 
+                disabled = not enable_custom_drink)
 
-        if result:
-            add_data(*result)
+with col2:
+    with data_table_container:   
+        if st.button("Add"):
+            if custom_drink == "" and custom_caff == "":
+                result = handle_input(drink, time, None)
+            else: 
+                result = handle_input(custom_drink, time, custom_caff)
 
-with data_table_container:    
-    if st.button("Clear"):
-        st.session_state.intake = []
-        st.session_state.table_list = []
-        st.session_state.drinks = []
+            if result:
+                add_data(*result) 
 
-    st.table(data=st.session_state.table_list)
+        if st.button("Clear"):
+            st.session_state.intake = []
+            st.session_state.table_list = []
+            st.session_state.drinks = []
+
+        st.table(data=st.session_state.table_list)
 
 with graph_container:
     if st.button("Show"):
