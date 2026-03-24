@@ -99,6 +99,8 @@ def handle_input(drink, time, cust_caff_amnt):
         elif cust_caff_amnt and drink == "":
             st.info('No custom drink, yet there is a caffeine amount...', icon="🤔")
             return None
+        elif cust_caff_amnt = "" and drink = "":
+            st.info('Did you want to add a preset drink?', icon="🤔")
         elif not re.match(r"^\d+$", cust_caff_amnt):
             st.info("Only numbers are allowed.")
             return None
@@ -222,12 +224,10 @@ with col1:
 with col2:
     with data_table_container:   
         if st.button("Add"):
-            if custom_drink == "" and custom_caff == "":
+            if not enable_custom:
                 result = handle_input(drink, time, None)
             else: 
                 result = handle_input(custom_drink, time, custom_caff)
-                st.session_state.custom_drink = ""
-                st.session_state.custom_caff = ""
 
             if result:
                 add_data(*result) 
