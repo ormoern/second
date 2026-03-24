@@ -16,7 +16,7 @@ import pytz
 
 #graph params
 hrs_amnt = 32
-y_const = 40
+y_const = 0.5
 
 tz_Tln = pytz.timezone('Europe/Tallinn') 
 now = datetime.now(tz_Tln)
@@ -63,7 +63,7 @@ caffeine_amount = {
 metabolism_speed_values = {
     "Fast": 3.5,
     "Regular": 5.7,
-    "Slow": 7
+    "Slow": 8.5
 }
 
 #helper functions
@@ -232,7 +232,7 @@ def actions_on_show():
     plt.plot(x_plot, y_plot)
     plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
     plt.xlabel('time')
-    plt.ylabel('caffeine, mg')
+    plt.ylabel('caffeine concentration, mg/kg')
     plt.axhline(y=y_const, color='r', linestyle='--')
     plt.legend()
     plt.tight_layout()
