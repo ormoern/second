@@ -228,8 +228,9 @@ def actions_on_show():
 input_container = st.container()
 data_table_container = st.container()
 graph_container = st.container()
+graph_data_container = st.container()
 
-col1, col2, col3 = st.columns(3)
+col1, col2 = st.columns(2)
 
 with col1:
     with input_container:
@@ -292,7 +293,7 @@ with graph_container:
     if st.button("Show"):
         actions_on_show()
 
-with col3:
+with graph_data_container:
     curr_caff_level = st.session_state.curr_caff_lvl
     safe_to_sleep_value = st.session_state.safe_to_sleep
     st.text(f"Current caffeine level, mg: {curr_caff_level}")
