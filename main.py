@@ -182,8 +182,8 @@ with input_container:
         custom_caff = st.text_input("Caffeine amount, mg", placeholder="100")
 
     if not custom_drink_expander.open:
-        custom_drink = st.text_input("Custom drink", placeholder="Drink", disable)
-        custom_caff = st.text_input("Caffeine amount, mg", placeholder="100", disable)
+        custom_drink(disable)
+        custom_caff(disable)
 
     drink = st.selectbox(
         "Drink",
