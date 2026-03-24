@@ -212,7 +212,7 @@ with col1:
             key = "custom_caff",
             placeholder="100", 
             disabled = not enable_custom)
-            if not enable_custom:
+            if st.session_state.custom_caff and st.session_state.custom_drink and not enable_custom:
                 st.session_state.custom_caff = ""
                 st.session_state.custom_drink = ""
                 
