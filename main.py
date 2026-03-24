@@ -11,10 +11,14 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import re
+from datetime import datetime
 
 #graph params
 hrs_amnt = 32
 y_const = 40
+
+now = datetime.now()
+current_time = now.strftime("%H.%M")
 
 #sessional variables
 if "intake" not in st.session_state:
@@ -29,6 +33,10 @@ if "custom_drink" not in st.session_state:
     st.session_state.custom_drink = ""
 if "custom_caff" not in st.session_state:
     st.session_state.custom_caff = ""
+if "curr_caff_lvl" not in st.session_state:
+    st.session_state.curr_caff_lvl = 0
+if "safe_to_sleep" not in st.session_state:
+    st.session_state.safe_to_sleep = False
 
 enable_custom = st.session_state.custom_state
 
@@ -178,6 +186,16 @@ def absorption_half_life(intake, start_time, hours, start_caff):
         print(f"An error occurred: {e}")
     return x, y
 
+#get caff for current time
+def curr_caff(x, y):
+    line, = plt.plot(x, y)
+    x_data = line.get_xdata()
+    y_data = line.get_ydata()
+
+    target_x = time_to_int(current_time)
+    y_value = np.interp(target_x, x_data, y_data)
+    return y_value
+
 #containers
 input_container = st.container()
 data_table_container = st.container()
@@ -244,6 +262,7 @@ with graph_container:
     if st.button("Show"):
         x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
         plt.plot(x_plot, y_plot)
+        st.info(curr_caff(x_plot, y_plot))
         plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
         plt.xlabel('time')
         plt.ylabel('caffeine, mg')
