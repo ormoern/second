@@ -199,15 +199,12 @@ with col1:
         with col1_2:
             st.session_state.custom_state = st.checkbox("Add custom drink.")
             enable_custom = st.session_state.custom_state
-
-            with st.expander("", 
-            expanded = enable_custom):
-                custom_drink = st.text_input("Custom drink", 
-                placeholder = "Drink", 
-                disabled = not enable_custom)
-                custom_caff = st.text_input("Caffeine amount, mg", 
-                placeholder="100", 
-                disabled = not enable_custom)
+            custom_drink = st.text_input("Custom drink", 
+            placeholder = "Drink", 
+            disabled = not enable_custom)
+            custom_caff = st.text_input("Caffeine amount, mg", 
+            placeholder="100", 
+            disabled = not enable_custom)
 
 with col2:
     with data_table_container:   
