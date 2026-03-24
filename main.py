@@ -39,6 +39,10 @@ if "curr_caff_lvl" not in st.session_state:
     st.session_state.curr_caff_lvl = 0
 if "safe_to_sleep" not in st.session_state:
     st.session_state.safe_to_sleep = True
+if "body_m" not in st.session_state:
+    st.session_state.body_m = ""
+if "m_speed" not in st.session_state:
+    st.session_state.m_speed = ""
 
 enable_custom = st.session_state.custom_state
 
@@ -54,6 +58,12 @@ caffeine_amount = {
     "Green tea (300ml)": 40,
     "Energy drink (250ml)": 75,
     "Energy drink (500ml)": 150
+}
+
+metabolism_speed_values = {
+    "Fast": 3.5,
+    "Regular": 5.7,
+    "Slow": 7
 }
 
 #helper functions
@@ -89,7 +99,7 @@ def time_to_int(time):
     return time_int
 
 #input handling
-def handle_input(drink, time, cust_caff_amnt):
+def handle_input(drink, time, cust_caff_amnt, body_mass, metabolism_speed):
     print("start check")
     try:
         if time == "":
@@ -98,9 +108,12 @@ def handle_input(drink, time, cust_caff_amnt):
         elif not check_time_format(time):
             st.info('Check time format (ex: 12.30)', icon="🕙")
             return None
-            
+        elif not re.match(r"^\d+$", cust_caff_amnt):
+            st.info("Check body mass. Only numbers are allowed.")
         elif drink in caffeine_amount:
             est_caffeine = caffeine_amount[drink]
+            st.session_state.body_m = body_mass
+            st.session_state.m_speed = metabolism_speed
             return time, drink, est_caffeine
 
         elif cust_caff_amnt == "" and drink:
@@ -121,6 +134,8 @@ def handle_input(drink, time, cust_caff_amnt):
 
         elif drink not in caffeine_amount:
             est_caffeine = int(cust_caff_amnt)
+            st.session_state.body_m = body_mass
+            st.session_state.m_speed = metabolism_speed
             return time, drink, est_caffeine
         else:
             st.info('Uhh, what?')
@@ -140,10 +155,9 @@ def add_data(time, drink, est_caffeine):
     return
 
 #main script logic
-def absorption_half_life(intake, start_time, hours, start_caff):
+def absorption_half_life(intake, start_time, hours, start_caff, body_mass, half_life):
     try:
         x = np.linspace(start_time, hours, 300)
-        half_life = 5.70
         
         intake_len = len(intake)
         
@@ -158,13 +172,17 @@ def absorption_half_life(intake, start_time, hours, start_caff):
             #absorption
             intake_time = time_to_int(intake[i][0])
             intake_caff = intake[i][1]
-        
+
+            curr_conc = curr_caff / body_mass
             start_x = intake_time
-            start_y = curr_caff
+            start_y = curr_conc
+            
             curr_caff = curr_caff + intake_caff
+            curr_conc = curr_caff / body_mass
+
             decay_start = intake_time + 0.75
             end_x = decay_start
-            end_y = curr_caff
+            end_y = curr_conc
         
             # Calculate absorption only for the absorption phase
             y_absorption_full = start_y + ((end_y - start_y) / (end_x - start_x)) * (x - start_x)
@@ -206,7 +224,10 @@ def safe_to_sleep(current_caffeine_level):
         return False
 
 def actions_on_show():
-    x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
+    body_mass_int = int(st.session_state.b_mass)
+    metabolism_s = metabolism_speed_values[st.session_state.m_speed]
+    
+    x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0, body_mass_int, metabolism_s)
 
     st.session_state.curr_caff_lvl = current_caffeine_level(x_plot, y_plot)
     curr_caff_level = st.session_state.curr_caff_lvl
@@ -253,29 +274,39 @@ with col1:
             )
 
         with col1_2:
+            body_mass = st.text_input("Approximate body mass, kg", 
+                placeholder="70kg"
+            )
+            metabol_speed = st.selectbox("Approximate metabolism speed",
+                ("Slow",
+                "Average",
+                "Fast")
+            )
             enable_custom = st.checkbox(
                 "Add custom drink.", 
                 value = st.session_state.get("custom_state", False), 
                 key = "custom_state"
-                )
+            )
             custom_drink = st.text_input("Custom drink", 
-            value = "",
-            key = "custom_drink",
-            placeholder = "Drink",
-            disabled = not enable_custom)
+                value = "",
+                key = "custom_drink",
+                placeholder = "Drink",
+                disabled = not enable_custom
+            )
             custom_caff = st.text_input("Caffeine amount, mg", 
-            value = "",
-            key = "custom_caff",
-            placeholder="100", 
-            disabled = not enable_custom)
+                value = "",
+                key = "custom_caff",
+                placeholder="100", 
+                disabled = not enable_custom
+            )
 
 with col2:
     with data_table_container:   
         if st.button("Add"):
             if not enable_custom:
-                result = handle_input(drink, time, None)
+                result = handle_input(drink, time, None, body_mass, metabol_speed)
             else: 
-                result = handle_input(custom_drink, time, custom_caff)
+                result = handle_input(custom_drink, time, custom_caff, body_mass, metabol_speed)
 
             if result:
                 add_data(*result) 
