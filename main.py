@@ -193,7 +193,7 @@ with col1:
             "Green tea (300ml)", 
             "Energy drink (250ml)", 
             "Energy drink (500ml)"),
-            disabled = st.session_state.custom_state
+            disabled = not st.session_state.custom_state
             )
 
         with col1_2:
