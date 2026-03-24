@@ -270,7 +270,7 @@ with col2:
         st.table(data=st.session_state.table_list)
 with col3:
     curr_caff_level = 0
-    safe_to_sleep_level = True
+    safe_to_sleep_value = True
     st.text(f"Current caffeine level, mg: {curr_caff_level}")
     st.text(f"Safe to go to sleep: {safe_to_sleep_value}")
 
