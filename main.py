@@ -39,8 +39,6 @@ if "curr_caff_lvl" not in st.session_state:
     st.session_state.curr_caff_lvl = 0
 if "safe_to_sleep" not in st.session_state:
     st.session_state.safe_to_sleep = True
-if "show" not in st.session_state:
-    st.session_state.show = False
 
 enable_custom = st.session_state.custom_state
 
@@ -293,15 +291,12 @@ with col2:
 with col3:
     curr_caff_level = st.session_state.curr_caff_lvl
     safe_to_sleep_value = st.session_state.safe_to_sleep
-    if st.session_state.show:
-        curr_caff_level = st.session_state.curr_caff_lvl
-        safe_to_sleep_value = st.session_state.safe_to_sleep
     st.text(f"Current caffeine level, mg: {curr_caff_level}")
     st.text(f"Safe to go to sleep: {safe_to_sleep_value}")
 
 
 with graph_container:
-    if st.button("Show", key="show"):
+    if st.button("Show"):
         actions_on_show()
 
 
