@@ -177,7 +177,7 @@ with input_container:
 
     custom_drink_expander = st.expander("Add custom drink.", on_change="rerun")
 
-    with custom_drink_expander
+    with custom_drink_expander:
         custom_drink = st.text_input("Custom drink", placeholder="Drink")
         custom_caff = st.text_input("Caffeine amount, mg", placeholder="100")
 
