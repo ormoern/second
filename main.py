@@ -195,6 +195,7 @@ def curr_caff(x, y):
     y_data = line.get_ydata()
 
     target_x = time_to_int(current_time)
+    st.info(f"current time: {current_time}")
     st.info(f"target_x: {target_x}")
     y_value = np.interp(target_x, x_data, y_data)
     return y_value
