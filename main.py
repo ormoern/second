@@ -224,7 +224,7 @@ def safe_to_sleep(current_caffeine_level):
         return False
 
 def actions_on_show():
-    body_mass_int = int(st.session_state.b_mass)
+    body_mass_int = int(st.session_state.body_m)
     metabolism_s = metabolism_speed_values[st.session_state.m_speed]
     
     x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0, body_mass_int, metabolism_s)
