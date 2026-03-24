@@ -12,33 +12,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 import re
 
+#graph params
+hrs_amnt = 32
+y_const = 40
 
+#sessional variables
 if "intake" not in st.session_state:
     st.session_state.intake = []
 if "table_list" not in st.session_state:
     st.session_state.table_list = []
 if "drinks" not in st.session_state:
     st.session_state.drinks = []
-    
-time = st.text_input("Time", placeholder="00.00")
 
-custom_drink = st.text_input("Custom drink", placeholder="Drink")
-custom_caff = st.text_input("Caffeine amount, mg", placeholder="100")
-
-drink = st.selectbox(
-    "Drink",
-    ("Espresso", 
-    "Double espresso", 
-    "Filter coffee", 
-    "Latte", 
-    "Cappuccino", 
-    "Flat white", 
-    "Black tea (300ml)", 
-    "Green tea (300ml)", 
-    "Energy drink (250ml)", 
-    "Energy drink (500ml)")
-)
-
+#drinks preset
 caffeine_amount = {
     "Espresso": 65,
     "Double espresso": 130,
@@ -52,6 +38,7 @@ caffeine_amount = {
     "Energy drink (500ml)": 150
 }
 
+#helper functions
 def check_time_format(time):
     if len(time) > 0 and "." in time:
         time_list = time.split(".")
@@ -63,6 +50,27 @@ def check_time_format(time):
     else:
         return False
 
+def ticks(amount):
+  tick = []
+  for i in range(amount):
+    x = i
+    tick.append(x)
+  return tick
+
+def strings(ticks):
+  strings = []
+  for i in range(len(ticks)):
+    strings.append(f"{ticks[i % 24]}:00")
+  return strings
+
+def time_to_int(time):
+    time_list = time.split(".")
+    time_1 = int(time_list[0])
+    time_2 = int(time_list[1])
+    time_int = round((time_1 + (time_2 / 60)), 2)
+    return time_int
+
+#input handling
 def handle_input(drink, time, cust_caff_amnt):
     print("start check")
     try:
@@ -99,6 +107,7 @@ def handle_input(drink, time, cust_caff_amnt):
     except Exception as e:
         return None
 
+#data handling
 def add_data(time, drink, est_caffeine):
     st.session_state.drinks.append(drink)
     intake_tuple = (time, est_caffeine)
@@ -109,30 +118,7 @@ def add_data(time, drink, est_caffeine):
         st.session_state.table_list.append(temp_dict)
     return
 
-if st.button("Add"):
-    if custom_drink == "" and custom_caff == "":
-        result = handle_input(drink, time, None)
-    else: 
-        result = handle_input(custom_drink, time, custom_caff)
-
-    if result:
-        add_data(*result)
-
-    
-if st.button("Clear"):
-    st.session_state.intake = []
-    st.session_state.table_list = []
-    st.session_state.drinks = []
-                 
-st.table(data=st.session_state.table_list)
-
-def time_to_int(time):
-    time_list = time.split(".")
-    time_1 = int(time_list[0])
-    time_2 = int(time_list[1])
-    time_int = round((time_1 + (time_2 / 60)), 2)
-    return time_int
-
+#main script logic
 def absorption_half_life(intake, start_time, hours, start_caff):
     try:
         x = np.linspace(start_time, hours, 300)
@@ -181,32 +167,66 @@ def absorption_half_life(intake, start_time, hours, start_caff):
         print(f"An error occurred: {e}")
     return x, y
 
-hrs_amnt = 32
-y_const = 40
+#containers
+input_container = st.container()
+data_table_container = st.container()
+graph_container = st.container()
 
-def ticks(amount):
-  tick = []
-  for i in range(amount):
-    x = i
-    tick.append(x)
-  return tick
+with input_container:   
+    time = st.text_input("Time", placeholder="00.00")
 
-def strings(ticks):
-  strings = []
-  for i in range(len(ticks)):
-    strings.append(f"{ticks[i % 24]}:00")
-  return strings
+    custom_drink_expander = st.expander("Add custom drink.", on_change="rerun")
 
-if st.button("Show"):
-    x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
-    plt.plot(x_plot, y_plot)
-    plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
-    plt.xlabel('time')
-    plt.ylabel('caffeine, mg')
-    plt.axhline(y=y_const, color='r', linestyle='--')
-    plt.legend()
-    plt.tight_layout()
-    st.pyplot(plt.gcf())
+    with custom_drink_expander
+        custom_drink = st.text_input("Custom drink", placeholder="Drink")
+        custom_caff = st.text_input("Caffeine amount, mg", placeholder="100")
+
+    if not custom_drink_expander.open:
+        custom_drink = st.text_input("Custom drink", placeholder="Drink", disable)
+        custom_caff = st.text_input("Caffeine amount, mg", placeholder="100", disable)
+
+    drink = st.selectbox(
+        "Drink",
+        ("Espresso", 
+        "Double espresso", 
+        "Filter coffee", 
+        "Latte", 
+        "Cappuccino", 
+        "Flat white", 
+        "Black tea (300ml)", 
+        "Green tea (300ml)", 
+        "Energy drink (250ml)", 
+        "Energy drink (500ml)")
+    )
+
+    if st.button("Add"):
+        if custom_drink == "" and custom_caff == "":
+            result = handle_input(drink, time, None)
+        else: 
+            result = handle_input(custom_drink, time, custom_caff)
+
+        if result:
+            add_data(*result)
+
+with data_table_container:    
+    if st.button("Clear"):
+        st.session_state.intake = []
+        st.session_state.table_list = []
+        st.session_state.drinks = []
+
+    st.table(data=st.session_state.table_list)
+
+with graph_container:
+    if st.button("Show"):
+        x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
+        plt.plot(x_plot, y_plot)
+        plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
+        plt.xlabel('time')
+        plt.ylabel('caffeine, mg')
+        plt.axhline(y=y_const, color='r', linestyle='--')
+        plt.legend()
+        plt.tight_layout()
+        st.pyplot(plt.gcf())
     
 
 
