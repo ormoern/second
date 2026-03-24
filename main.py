@@ -291,11 +291,14 @@ with col2:
 with col3:
     curr_caff_level = st.session_state.curr_caff_lvl
     safe_to_sleep_value = st.session_state.safe_to_sleep
-    st.text(f"Current caffeine level, mg: {curr_caff_level}")
-    st.text(f"Safe to go to sleep: {safe_to_sleep_value}")
+    st.text(f"Current caffeine level, mg: {curr_caff_level}", key = "lvl")
+    st.text(f"Safe to go to sleep: {safe_to_sleep_value}", key = "sleep")
+    if st.session_state.show:
+        st.session_state.lvl = curr_caff_level
+        st.session_state.sleep = safe_to_sleep_value
 
 with graph_container:
-    if st.button("Show"):
+    if st.button("Show", key="show"):
         actions_on_show()
 
 
