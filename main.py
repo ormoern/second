@@ -15,7 +15,6 @@ from datetime import datetime
 import pytz
 
 #graph params
-hrs_amnt = 32
 y_const = 0.5
 
 tz_Tln = pytz.timezone('Europe/Tallinn') 
@@ -43,7 +42,12 @@ if "b_mass" not in st.session_state:
     st.session_state.b_mass = ""
 if "m_speed" not in st.session_state:
     st.session_state.m_speed = ""
+if "start_time" not in st.session_state:
+    st.session_state.start_time = 0
+if "hrs_amount" not in st.session_state:
+    st.session_state.hrs_amount = 24
 
+hrs_amnt = st.session_state.hrs_amount
 enable_custom = st.session_state.custom_state
 
 #drinks preset
@@ -145,9 +149,14 @@ def add_data(time, drink, est_caffeine, body_mass, metabol_speed):
     st.session_state.table_list = []
     st.session_state.b_mass = body_mass
     st.session_state.m_speed = metabol_speed
+    start_time = 0
     for i in range(len(st.session_state.intake)):
         temp_dict = {"Time": st.session_state.intake[i][0], "Drink":  st.session_state.drinks[i], "Estimated caffeine, mg": st.session_state.intake[i][1]}
         st.session_state.table_list.append(temp_dict)
+        intake_time = st.session_state.intake[i][0]
+        if intake_time > start_time:
+            start_time = intake_time
+    st.session_state.start_time = start_time
     return
 
 #main script logic
@@ -220,8 +229,9 @@ def safe_to_sleep(current_caffeine_level):
 def actions_on_show():
     body_mass_int = int(st.session_state.b_mass)
     metabolism_s = metabolism_speed_values[st.session_state.m_speed]
-    
-    x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0, body_mass_int, metabolism_s)
+    starting_time = st.session_state.start_time
+
+    x_plot, y_plot = absorption_half_life(st.session_state.intake, starting_time, hrs_amnt, 0, body_mass_int, metabolism_s)
 
     st.session_state.curr_caff_lvl = current_caffeine_level(x_plot, y_plot)
     curr_caff_level = st.session_state.curr_caff_lvl
