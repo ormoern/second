@@ -232,7 +232,7 @@ def actions_on_show():
         metabolism_s = metabolism_speed_values[st.session_state.m_speed]
         starting_time = st.session_state.start_time
 
-        x_plot, y_plot = absorption_half_life(st.session_state.intake, starting_time, hrs_amnt, 0, body_mass_int, metabolism_s)
+        x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, hrs_amnt, 0, body_mass_int, metabolism_s)
 
         st.session_state.curr_caff_lvl = current_caffeine_level(x_plot, y_plot)
         curr_caff_level = st.session_state.curr_caff_lvl
