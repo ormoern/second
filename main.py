@@ -83,13 +83,9 @@ def strings(ticks):
 
 def time_to_int(time):
     time_list = time.split(".")
-    print(time_list)
     time_1 = int(time_list[0])
-    print(time_1)
     time_2 = int(time_list[1])
-    print(time_2)
     time_int = round((time_1 + (time_2 / 60)), 2)
-    print(time_int)
     return time_int
 
 #input handling
@@ -199,7 +195,7 @@ def curr_caff(x, y):
     y_data = line.get_ydata()
 
     target_x = time_to_int(current_time)
-    print(target_x)
+    st.info(f"target_x: {target_x}")
     y_value = np.interp(target_x, x_data, y_data)
     return y_value
 
@@ -269,8 +265,7 @@ with graph_container:
     if st.button("Show"):
         x_plot, y_plot = absorption_half_life(st.session_state.intake, 0, 30, 0)
         plt.plot(x_plot, y_plot)
-        st.info(current_time)
-        st.info(curr_caff(x_plot, y_plot))
+        st.info(f"curre_caff: {curr_caff(x_plot, y_plot)}")
         plt.xticks(ticks(hrs_amnt), strings(ticks(hrs_amnt)), rotation=45)
         plt.xlabel('time')
         plt.ylabel('caffeine, mg')
