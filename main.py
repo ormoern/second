@@ -144,6 +144,7 @@ def add_data(time, drink, est_caffeine):
 #main script logic
 def absorption_half_life(intake, start_time, hours, start_caff):
     try:
+        st.info(intake)
         x = np.linspace(start_time, hours, 300)
         half_life = 5.70
         
