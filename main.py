@@ -167,6 +167,7 @@ def absorption_half_life(intake, start_time, hours, start_caff):
             curr_caff = curr_caff + intake_caff
             decay_start = intake_time + 0.75
             end_x = decay_start
+            info.st(end_x)
             end_y = curr_caff
         
             # Calculate absorption only for the absorption phase
